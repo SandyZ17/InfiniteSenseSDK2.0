@@ -18,7 +18,6 @@ This is a major upgrade of the previous SDK, bringing a smoother development exp
 
 ✨ Lighter Dependencies – Reduced compilation overhead for faster builds.  
 🤖 ROS2 & Python Support – Seamlessly integrate with modern robotics and scripting workflows.  
-
 ⏱ More Accurate Synchronization – Improved timing mechanisms for precise coordination.  
 📡 Transparent Data Protocols – Enhanced clarity and flexibility in communication.  
 ⚙️ Simplified Configuration – Set up and customize with ease.  
