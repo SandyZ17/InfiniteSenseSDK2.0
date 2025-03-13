@@ -1,5 +1,5 @@
 <p align="center">
-<img alt="Logo" src="assets/main_logo.png">
+<img style="width:50%;" alt="Logo" src="assets/main_logo.png">
 <br>
 <em>稳定 易用 精度</em>
 <br>
