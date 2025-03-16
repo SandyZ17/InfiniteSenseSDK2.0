@@ -36,12 +36,15 @@ Upgrade now and experience a more efficient and developer-friendly SDK! 🚀
 <img style="width:50%; alt="frame rate alignment" src="assets/align.png">
 <br>
 
-### Fourth generation synchronization board 
+### 📸Fourth generation synchronization board 
 Support different devices (2IMU+4CAM+2Lidar) different frequency synchronization, more secure power supply.
-<p align="center">
-<img style="width:50%; alt="board" src="assets/board.png">
-<br>
 
+<p align="center">
+<img style="width:50%; alt="board_a" src="assets/board_a.png">
+<br>
+<p align="center">
+<img style="width:50%; alt="board_b" src="assets/board_b.png">
+<br>
 ---
 
 Continuously Updating
