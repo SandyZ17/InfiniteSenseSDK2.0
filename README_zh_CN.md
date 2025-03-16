@@ -25,10 +25,18 @@
 ## 目前可公开的情报
 
 ### 更加准确的触发对齐与帧率
+
 <p align="center">
 <img style="width:50%;" alt="1秒钟触发" src="assets/one_second.png">
 <br>
 <p align="center">
 <img  style="width:50%; alt="帧率对齐" src="assets/align.png">
 <br>
+
+### 第四代同步版本
+第四代同步板，支持不同设备(2IMU+4CAM+2Lidar)不同频率同步，更加安全的电源.
+<p align="center">
+<img style="width:50%; alt="board" src="assets/board.png">
+<br>
+
 ---

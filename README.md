@@ -28,11 +28,21 @@ Upgrade now and experience a more efficient and developer-friendly SDK! 🚀
 
 ## Currently available information
 
-More accurate trigger alignment and frame rate
+### More accurate trigger alignment and frame rate
 <p align="center">
 <img style="width:50%; alt="1 second trigger" src="assets/one_second.png">
 <br>
 <p align="center">
 <img style="width:50%; alt="frame rate alignment" src="assets/align.png">
 <br>
+
+### Fourth generation synchronization board 
+Support different devices (2IMU+4CAM+2Lidar) different frequency synchronization, more secure power supply.
+<p align="center">
+<img style="width:50%; alt="board" src="assets/board.png">
+<br>
+
 ---
+
+Continuously Updating
+
