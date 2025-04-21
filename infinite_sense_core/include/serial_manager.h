@@ -3,13 +3,12 @@
 
 #include <thread>
 #include <memory>
-#include "sensor.h"
 
 namespace infinite_sense {
 class Ptp;
 class SerialManager {
  public:
-  explicit SerialManager(const std::string &port, int baud_rate, std::shared_ptr<SynchronizerData> data);
+  explicit SerialManager(const std::string &port, int baud_rate);
 
   ~SerialManager();
 
@@ -21,7 +20,7 @@ class SerialManager {
 
  private:
 
-  void Receive();
+  void Receive() const;
 
   void TimeStampSynchronization() const;
   std::string port_;
@@ -30,10 +29,5 @@ class SerialManager {
   std::thread rx_thread_, tx_thread_;
   bool started_{false};
   size_t frame_count_{0};
-
-  std::shared_ptr<SynchronizerData> data_;
-  ImuData imu_data_;
-  GPSData gps_data_;
-  TriggerData trigger_data_{};
 };
 }  // namespace infinite_sense

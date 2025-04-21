@@ -17,17 +17,40 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 add_subdirectory(third_party/serial)
 add_subdirectory(third_party/udp)
-
 add_library(${PROJECT_NAME} SHARED
     src/infinite_sense.cpp
+    src/trigger_manager.cpp
     src/serial_manager.cpp
+    src/cam_manager.cpp
+    src/image.cpp
     src/net_manager.cpp
+    src/messenger.cpp
     src/ptp.cpp
+    include/ptp.h
+    src/sensor.h
+    include/messenger.h
 )
-
+# 检测平台并设置相关变量
+if (CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+  set(PLATFORM_DIR "arm")
+  set(MVCAM_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/mvcam/lib/aarch64)
+elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "amd64")
+  set(PLATFORM_DIR "x86")
+  set(MVCAM_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/mvcam/lib/x86/64)
+else ()
+  message(STATUS "Unknown Architecture")
+  set(PLATFORM_DIR "Unknown")
+endif ()
+message(STATUS "Find MVCAM_LIB_DIR : ${MVCAM_LIB_DIR}")
+# 设置目标链接目录
+target_link_directories(${PROJECT_NAME} PUBLIC
+    BEFORE ${MVCAM_LIB_DIR}
+    ${CMAKE_INSTALL_RPATH}
+)
 
 # 链接库
 target_link_libraries(${PROJECT_NAME} PUBLIC
+    MvCameraControl
     serial
     udp
 )
@@ -35,6 +58,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 # 包含目录
 target_include_directories(${PROJECT_NAME} PUBLIC
     include
+    third_party/mvcam/include
 )
 # 设置目标的 RPATH
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -54,3 +78,9 @@ install(TARGETS ${PROJECT_NAME} serial udp
 # 安装头文件目录
 install(DIRECTORY include/
     DESTINATION ${PROJECT_INSTALL_DIR}/${PLATFORM_DIR}/include)
+
+# 安装 MVCAM 库文件
+if (MVCAM_LIB_DIR)
+  install(DIRECTORY ${MVCAM_LIB_DIR}/
+      DESTINATION ${PROJECT_INSTALL_DIR}/${PLATFORM_DIR}/lib)
+endif ()

@@ -4,7 +4,7 @@
 #include "ptp.h"
 #include "sensor.h"
 namespace infinite_sense {
-SerialManager::SerialManager(const std::string &port, const int baud_rate, std::shared_ptr<SynchronizerData> data) {
+SerialManager::SerialManager(const std::string &port, const int baud_rate) {
   port_ = port;
   serial_ptr_ = std::make_unique<serial::Serial>();
   try {
@@ -18,7 +18,6 @@ SerialManager::SerialManager(const std::string &port, const int baud_rate, std::
     if (serial_ptr_->isOpen()) {
       serial_ptr_->close();
     }
-    exit(EXIT_FAILURE);
     return;
   }
   if (serial_ptr_->isOpen()) {
@@ -27,7 +26,6 @@ SerialManager::SerialManager(const std::string &port, const int baud_rate, std::
   }
   ptp_ = std::make_unique<Ptp>();
   ptp_->SetSerialPtr(serial_ptr_);
-  data_ = std::move(data);
 }
 
 SerialManager::~SerialManager() {
@@ -56,7 +54,7 @@ void SerialManager::Stop() {
   tx_thread_.join();
   LOG(INFO) << "Serial manager stopped";
 }
-void SerialManager::Receive() {
+void SerialManager::Receive() const {
   while (started_) {
     if (serial_ptr_->available()) {
       std::string serial_recv = serial_ptr_->readline();
@@ -72,17 +70,10 @@ void SerialManager::Receive() {
         }
         // std::cout << json_data.dump() << std::endl;
         ptp_->ReceivePtpData(json_data);
-        ProcessTriggerData(json_data, trigger_data_);
-        bool add = ProcessIMUData(json_data, imu_data_);
-        ProcessGPSData(json_data, gps_data_);
+        ProcessTriggerData(json_data);
+        ProcessIMUData(json_data);
+        ProcessGPSData(json_data);
         ProcessLOGData(json_data);
-
-        // update
-        data_->SetGPSData(gps_data_);
-        if (add) {
-          data_->AddImuData(imu_data_);
-        }
-        data_->SetTriggerData(trigger_data_);
       } catch (const nlohmann::json::parse_error &e) {
         LOG(ERROR) << "Failed to parse JSON: " << e.what();
         LOG(ERROR) << "Received data: " << serial_recv;

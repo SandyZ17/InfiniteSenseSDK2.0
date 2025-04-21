@@ -1,15 +1,14 @@
 #pragma once
 #include "practical_socket.h"
-#include "sensor.h"
+
 #include <thread>
 #include <memory>
 
 namespace infinite_sense {
 class Ptp;
-class SynchronizerData;
 class NetManager {
  public:
-  explicit NetManager(std::string target_ip, unsigned short port, std::shared_ptr<SynchronizerData> data);
+  explicit NetManager(std::string target_ip, unsigned short port);
 
   ~NetManager();
 
@@ -19,7 +18,7 @@ class NetManager {
 
  private:
 
-  void Receive();
+  void Receive() const;
 
   void TimeStampSynchronization() const;
   std::shared_ptr<UDPSocket> net_ptr_;
@@ -32,10 +31,5 @@ class NetManager {
   bool started_{false};
   size_t frame_count_{0};
   bool config_{false};
-
-  std::shared_ptr<SynchronizerData> data_;
-  ImuData imu_data_;
-  GPSData gps_data_;
-  TriggerData trigger_data_{};
 };
 }  // namespace infinite_sense

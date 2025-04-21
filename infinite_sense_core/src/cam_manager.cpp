@@ -1,7 +1,7 @@
-#include "mv_camera.h"
+#include "cam_manager.h"
+#include "infinite_sense.h"
 #include "MvCameraControl.h"
 #include "log.h"
-
 
 namespace infinite_sense {
 bool IsColor(const MvGvspPixelType type) {
@@ -75,9 +75,9 @@ bool PrintDeviceInfo(const MV_CC_DEVICE_INFO *info) {
   return true;
 }
 
-MVCamera::~MVCamera() { Stop(); }
+CamManger::~CamManger() { Stop(); }
 
-bool MVCamera::Initialization() {
+bool CamManger::Initialization() {
   int n_ret = MV_OK;
   MV_CC_DEVICE_INFO_LIST st_device_list{};
   memset(&st_device_list, 0, sizeof(MV_CC_DEVICE_INFO_LIST));
@@ -150,7 +150,7 @@ bool MVCamera::Initialization() {
     return false;
   }
 }
-void MVCamera::Restart() {
+void CamManger::Restart() {
   Stop();
   std::this_thread::sleep_for(std::chrono::milliseconds{500});
   if (!Initialization()) {
@@ -161,7 +161,7 @@ void MVCamera::Restart() {
   }
 }
 
-void MVCamera::Stop() {
+void CamManger::Stop() {
   Disable();
   std::this_thread::sleep_for(std::chrono::milliseconds{500});
   for (auto &cam_thread : cam_threads_) {
@@ -190,12 +190,11 @@ void MVCamera::Stop() {
     LOG(INFO) << "Exit  " << i << "  cam ";
   }
 }
-
-void MVCamera::Receive(void *handle, const std::string &name) const {
+void CamManger::Receive(void *handle, const std::string &name) const {
   unsigned int last_count = 0;
   MV_FRAME_OUT st_out_frame;
   CamData cam_data;
-
+  Messenger &messenger = Messenger::GetInstance();
   while (is_running_) {
     memset(&st_out_frame, 0, sizeof(MV_FRAME_OUT));
     int n_ret = MV_CC_GetImageBuffer(handle, &st_out_frame, 10);
@@ -231,7 +230,7 @@ void MVCamera::Receive(void *handle, const std::string &name) const {
           cam_data.image = GMat(st_out_frame.stFrameInfo.nHeight, st_out_frame.stFrameInfo.nWidth,
                                 GMatType<uint8_t, 3>::Type, st_out_frame.pBufAddr);
         }
-
+        messenger.PubStruct(name,&cam_data,sizeof(cam_data));
         if (last_count == 0) {
           last_count = st_out_frame.stFrameInfo.nFrameNum;
         } else {
@@ -252,8 +251,7 @@ void MVCamera::Receive(void *handle, const std::string &name) const {
     std::this_thread::sleep_for(std::chrono::milliseconds{2});
   }
 }
-
-void MVCamera::Start() {
+void CamManger::Start() {
   for (const auto &handle : handles_) {
     int n_ret = MV_OK;
     MVCC_STRINGVALUE pst_value;
@@ -268,7 +266,7 @@ void MVCamera::Start() {
       name = "cam_" + std::to_string(cam_index++);
       LOG(WARNING) << "Camera name is empty,create name " << name;
     }
-    cam_threads_.emplace_back(&MVCamera::Receive, this, handle, name);
+    cam_threads_.emplace_back(&CamManger::Receive, this, handle, name);
     LOG(INFO) << "Camera name is " << name << " start";
   }
 }

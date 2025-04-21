@@ -1,11 +1,9 @@
 #include "infinite_sense.h"
-
 #include "ptp.h"
 #include "sensor.h"
 #include "net_manager.h"
-
 namespace infinite_sense {
-NetManager::NetManager(std::string target_ip, const unsigned short port, std::shared_ptr<SynchronizerData> data)
+NetManager::NetManager(std::string target_ip, const unsigned short port)
     : port_(port), target_ip_(std::move(target_ip)) {
   uint64_t curr_time =
       std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch())
@@ -15,7 +13,6 @@ NetManager::NetManager(std::string target_ip, const unsigned short port, std::sh
   net_ptr_->sendTo(byte, sizeof(uint64_t), target_ip_, port_);
   ptp_ = std::make_unique<Ptp>();
   ptp_->SetNetPtr(net_ptr_, target_ip_, port_);
-  data_ = std::move(data);
 }
 
 NetManager::~NetManager() {
@@ -38,8 +35,8 @@ void NetManager::Stop() {
   tx_thread_.join();
   LOG(INFO) << "Net manager stopped";
 }
-void NetManager::Receive() {
-  uint8_t buffer[65540]{};
+void NetManager::Receive() const {
+  uchar buffer[65540]{};
   string source_address;
   unsigned short source_port;
   while (started_) {
@@ -61,16 +58,10 @@ void NetManager::Receive() {
         }
         // LOG(INFO) <<  json_data.dump();
         ptp_->ReceivePtpData(json_data);
-        ProcessTriggerData(json_data, trigger_data_);
-        bool add = ProcessIMUData(json_data, imu_data_);
-        ProcessGPSData(json_data, gps_data_);
+        ProcessTriggerData(json_data);
+        ProcessIMUData(json_data);
+        ProcessGPSData(json_data);
         ProcessLOGData(json_data);
-        // update
-        data_->SetGPSData(gps_data_);
-        if (add) {
-          data_->AddImuData(imu_data_);
-        }
-        data_->SetTriggerData(trigger_data_);
       } catch (const nlohmann::json::parse_error &e) {
         LOG(ERROR) << "Failed to parse JSON: " << e.what();
         LOG(ERROR) << "Received data: " << recv_data;
