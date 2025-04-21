@@ -44,7 +44,7 @@
 ---
 
 # 固件配置指南
-
+串口发送以下指令设备
 ```aiignore
 {"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":20,"hz_dev_1":30,"hz_dev_2":40,"hz_dev_3":50,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true}
 ```
