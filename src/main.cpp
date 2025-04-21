@@ -1,24 +1,16 @@
 #include "infinite_sense.h"
 #include <thread>
 using namespace infinite_sense;
-
-
 int main(int argc, char **argv)
 {
   if (argc < 2){
     std::cerr << "Usage: ./infinite_sense_node <config_file>" << std::endl;
   }
-  // 读取配置文件
   std::string config_path = argv[1];
   std::cout<<"Read config from "<<config_path<<std::endl;
   Synchronizer synchronizer(config_path);
-  // 打印配置信息
   synchronizer.PrintSummary();
-
-  // PC 与 同步板通信线程
   synchronizer.Start();
-
-  // 输出读取的当前数据
   while (true) {
     if (synchronizer.ImuUpdate()) {
         ImuData imu = synchronizer.GetImuData();
@@ -52,7 +44,6 @@ int main(int argc, char **argv)
     
     std::this_thread::sleep_for(std::chrono::milliseconds{250});
   }
-
   synchronizer.Stop();
   return 0;
 }
