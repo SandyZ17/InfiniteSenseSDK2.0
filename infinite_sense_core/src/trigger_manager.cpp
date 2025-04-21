@@ -1,6 +1,5 @@
 #include "trigger_manager.h"
 #include "infinite_sense.h"
-#include <mutex>
 
 namespace infinite_sense {
 
