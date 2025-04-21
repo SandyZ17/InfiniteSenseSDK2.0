@@ -61,11 +61,11 @@ class Parameters {
 
 class Synchronizer {
  public:
-  Synchronizer(std::string config);
+  explicit Synchronizer(const std::string& config);
   ~Synchronizer() = default;
   void Start() const;
   void Stop() const;
-  void SetLogPath(const std::string &path);
+  static void SetLogPath(const std::string &path);
   void PrintSummary();
   
   // 获取的数据
@@ -77,7 +77,7 @@ class Synchronizer {
   std::shared_ptr<NetManager> net_manager_{nullptr};
   std::shared_ptr<SerialManager> serial_manager_{nullptr};
 
-  void readConfigFile(const std::string path);
+  void ReadConfigFile(const std::string& path);
   std::shared_ptr<Parameters> config_ptr_{};
 
   std::shared_ptr<SynchronizerData> data_ptr_;

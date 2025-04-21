@@ -34,57 +34,57 @@ typedef struct TriggerData {
 
 struct SynchronizerData{
 public:
-  std::queue<ImuData> imu_queue_;
-  GPSData gps_;
-  TriggerData trigger_;
-  std::mutex imu_mutex_;
-  std::mutex gps_mutex_;
-  std::mutex trigger_mutex_;
+  std::queue<ImuData> imu_queue;
+  GPSData gps;
+  TriggerData trigger;
+  std::mutex imu_mutex;
+  std::mutex gps_mutex;
+  std::mutex trigger_mutex;
 
   ImuData GetImuData() {
-    imu_mutex_.lock(); 
-    ImuData tmp = imu_queue_.front();
-    imu_queue_.pop();
-    imu_mutex_.unlock();
+    imu_mutex.lock();
+    ImuData tmp = imu_queue.front();
+    imu_queue.pop();
+    imu_mutex.unlock();
     return tmp;
   }
 
   GPSData GetGPSData() {
-    gps_mutex_.lock();
-    GPSData tmp = gps_;
-    gps_mutex_.unlock();
+    gps_mutex.lock();
+    GPSData tmp = gps;
+    gps_mutex.unlock();
     return tmp;
   }
 
   TriggerData GetTriggerData() {
-    trigger_mutex_.lock();
-    TriggerData tmp = trigger_;
-    gps_mutex_.unlock();
+    trigger_mutex.lock();
+    TriggerData tmp = trigger;
+    gps_mutex.unlock();
     return tmp;
   }
 
-  void AddImuData(ImuData tmp){
-    imu_mutex_.lock(); 
-    imu_queue_.push(tmp);
-    if (imu_queue_.size() >= 50) {
-      imu_queue_.pop();
+  void AddImuData(const ImuData& tmp){
+    imu_mutex.lock();
+    imu_queue.push(tmp);
+    if (imu_queue.size() >= 50) {
+      imu_queue.pop();
     }
-    imu_mutex_.unlock();
+    imu_mutex.unlock();
   }
 
   void SetGPSData(GPSData tmp) {
-    gps_mutex_.lock();
-    gps_ = tmp;
-    gps_mutex_.unlock();
+    gps_mutex.lock();
+    gps = std::move(tmp);
+    gps_mutex.unlock();
   }
 
   void SetTriggerData(TriggerData tmp) {
-    trigger_mutex_.lock();
-    trigger_ = tmp;
-    gps_mutex_.unlock();
+    trigger_mutex.lock();
+    trigger = tmp;
+    gps_mutex.unlock();
   }
   
-  bool ImuUpdate() {return !imu_queue_.empty();}
+  bool ImuUpdate() const {return !imu_queue.empty();}
 };
 
 inline void ProcessTriggerData(const nlohmann::json &data, TriggerData &trigger) {

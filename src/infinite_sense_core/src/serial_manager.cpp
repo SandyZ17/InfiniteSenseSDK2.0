@@ -27,7 +27,7 @@ SerialManager::SerialManager(const std::string &port, const int baud_rate, std::
   }
   ptp_ = std::make_unique<Ptp>();
   ptp_->SetSerialPtr(serial_ptr_);
-  data_ = data;
+  data_ = std::move(data);
 }
 
 SerialManager::~SerialManager() {

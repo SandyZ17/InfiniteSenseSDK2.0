@@ -1,7 +1,9 @@
 #include "infinite_sense.h"
+
 #include "ptp.h"
 #include "sensor.h"
 #include "net_manager.h"
+
 namespace infinite_sense {
 NetManager::NetManager(std::string target_ip, const unsigned short port, std::shared_ptr<SynchronizerData> data)
     : port_(port), target_ip_(std::move(target_ip)) {
@@ -13,7 +15,7 @@ NetManager::NetManager(std::string target_ip, const unsigned short port, std::sh
   net_ptr_->sendTo(byte, sizeof(uint64_t), target_ip_, port_);
   ptp_ = std::make_unique<Ptp>();
   ptp_->SetNetPtr(net_ptr_, target_ip_, port_);
-  data_ = data;
+  data_ = std::move(data);
 }
 
 NetManager::~NetManager() {

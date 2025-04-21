@@ -34,6 +34,6 @@ class SerialManager {
   std::shared_ptr<SynchronizerData> data_;
   ImuData imu_data_;
   GPSData gps_data_;
-  TriggerData trigger_data_;
+  TriggerData trigger_data_{};
 };
 }  // namespace infinite_sense
