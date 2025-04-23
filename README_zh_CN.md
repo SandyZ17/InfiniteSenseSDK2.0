@@ -75,6 +75,6 @@
   "uart_1_baud_rate": 9600,   // PPS波特率（低速模式，用于雷达同步）
   "uart_2_baud_rate": 115200, // GPS波特率（中速模式，用于GPS数据读取）
   "use_gps": true,            // GPS模块启用标志
-  "use_pps": true             // 精确时钟同步信号启用标志（需配合GPS使用）
+  "use_pps": true             // 精确时钟同步信号启用标志
 }
 ```
