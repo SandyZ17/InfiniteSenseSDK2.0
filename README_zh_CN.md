@@ -1,10 +1,9 @@
-  <p align="center">
-<img style="width:50%;" alt="Logo" src="assets/main_logo.png">
-
-*稳定 易用 精度*
-
+<p align="center">
+<img  style="width:50%;"  alt="Logo" src="assets/main_logo.png">
+<br>
+<em>稳定 易用 精度</em>
+<br>
 </p>
-
 <p align="center">
 <a href="README.md">English</a>
 </p>
