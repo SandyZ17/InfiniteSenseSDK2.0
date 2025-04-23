@@ -58,7 +58,7 @@
 固件支持网口和串口配置，配置完成后自动重启。串口/网口发送以下信息到设备即可
 
 ```aiignore
-{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":20,"hz_cam_1":30,"hz_cam_2":40,"hz_cam_3":50,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true}
+{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":20,"hz_cam_2":30,"hz_cam_3":40,"hz_cam_4":50,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true}
 ```
 配置指令说明：
 ```python
@@ -68,9 +68,9 @@
   "ip": [192,168,1,188],      // 设备IP地址（IPv4四元组格式）
   "subnet": [255,255,255,0],  // 子网掩码配置
   "hz_cam_1": 20,             // 相机1触发频率（单位：Hz，建议≤100Hz）
-  "hz_cam_1": 30,             // 相机1信号采样频率（单位：Hz）
-  "hz_cam_2": 40,             // 相机2信号采样频率（单位：Hz）
-  "hz_cam_3": 50,             // 相机3信号采样频率（单位：Hz）
+  "hz_cam_2": 30,             // 相机2触发频率（单位：Hz，建议≤100Hz）
+  "hz_cam_3": 40,             // 相机3触发频率（单位：Hz，建议≤100Hz）
+  "hz_cam_4": 50,             // 相机4触发频率（单位：Hz，建议≤100Hz）
   "uart_0_baud_rate": 921600, // UART0波特率（高速模式，常用于传感器数据流）
   "uart_1_baud_rate": 9600,   // PPS波特率（低速模式，建议用于调试接口）
   "uart_2_baud_rate": 115200, // GPS波特率（中速模式，建议用于外设模块通信）
