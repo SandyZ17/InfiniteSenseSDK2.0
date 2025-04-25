@@ -7,7 +7,7 @@ class Ptp {
  public:
   Ptp() = default;
   void ReceivePtpData(const nlohmann::json &data);
-  void SendPtpData();
+  void SendPtpData() const;
   void SetSerialPtr(const std::shared_ptr<serial::Serial> &serial_ptr);
   void SetNetPtr(const std::shared_ptr<UDPSocket> &net_ptr, const std::string &target_ip, unsigned short port);
 

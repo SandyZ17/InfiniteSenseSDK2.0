@@ -44,7 +44,7 @@ void Ptp::ReceivePtpData(const nlohmann::json &data) {
   }
 }
 
-void Ptp::SendPtpData() {
+void Ptp::SendPtpData() const {
   uint64_t mark =
       std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch())
           .count();
