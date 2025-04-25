@@ -31,6 +31,7 @@
 1. 下载SDK源码,编译安装
 ```angular2html
     git clone git@github.com:InfiniteSenseLab/InfiniteSenseSDK2.0.git -b main
+    sudo apt-get install libzmq3-dev # 安装ZeroMQ依赖
     cd InfiniteSenseSDK2.0
     mkdir build && cd build
     cmake..
