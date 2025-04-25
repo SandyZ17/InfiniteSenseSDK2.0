@@ -52,6 +52,7 @@ cmake..
 ```
 ## [同步板配置](./assets/board_config.md)
 ## [传感器接线](./assets/connection_config.md)
-## Demo运行
-## 协议解析
+## [Demo运行](./assets/run_demo.md)
+## [协议解析](./assets/data_info.md)
+
 ## 常见问题
