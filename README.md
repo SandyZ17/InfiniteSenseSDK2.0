@@ -49,8 +49,8 @@ cd InfiniteSenseSDK2.0
 mkdir build && cd build
 cmake..
 ```
-## [传感器接线](./assets/connection_config.md)
 ## [同步板配置](./assets/firmware_config.md)
+## [传感器接线](./assets/connection_config.md)
 ## Demo
 ## 协议解析
 ## 常见问题
