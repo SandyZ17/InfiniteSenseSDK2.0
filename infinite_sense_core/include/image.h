@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdlib>
 #include <cstdint>
 #include <cstddef>
 namespace infinite_sense {
