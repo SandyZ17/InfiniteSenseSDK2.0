@@ -22,7 +22,6 @@ if (ZeroMQ_FOUND)
   find_package(ZeroMQ REQUIRED)
   add_executable(${PROJECT_NAME}_zmq_node
           example/ZMQ/zmq_main.cpp
-          infinite_sense_core/src/messenger.cpp
   )
   target_include_directories(${PROJECT_NAME}_zmq_node PRIVATE
       ${ZeroMQ_INCLUDE_DIRS}
