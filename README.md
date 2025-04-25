@@ -26,12 +26,15 @@
 
 立即升级，体验更高效、更友好的 SDK！🚀
 
-# 引言
-SDK 2.0 为前代重大升级版，新增多相机/雷达/IMU及单GPS混合信号协同管理能力，强化复杂传感器组网性能。采用ZeroMQ实现跨平台毫秒级数据同步，并通过开源核心代码与标准化接口，支持嵌入式/桌面/云端多场景灵活部署。
 # 开始使用
 
-1. 下载SDK源码
-2. 编译安装
-3. [配置设备](./assets/firmware_config.md)
+1. 下载SDK源码,编译安装
+```angular2html
+    git clone git@github.com:InfiniteSenseLab/InfiniteSenseSDK2.0.git -b main
+    cd InfiniteSenseSDK2.0
+    mkdir build && cd build
+    cmake..
+```
+2. [配置设备](./assets/firmware_config.md)
 3. 运行SDK测试Demo
 4. 阅读SDK文档
