@@ -38,16 +38,15 @@
 >| 主机(ARM/X86) | Intel/AMD/Jetson/RockChip/... | PTP    |
 
 # 开始使用
-1. 下载·安装
-```angular2html
-    git clone git@github.com:InfiniteSenseLab/InfiniteSenseSDK2.0.git -b main
-    sudo apt-get install libzmq3-dev # 安装ZeroMQ依赖
-    cd InfiniteSenseSDK2.0
-    mkdir build && cd build
-    cmake..
+## 下载·安装
+```bash
+git clone git@github.com:InfiniteSenseLab/InfiniteSenseSDK2.0.git -b main
+sudo apt-get install libzmq3-dev # 安装ZeroMQ依赖
+cd InfiniteSenseSDK2.0
+mkdir build && cd build
+cmake..
 ```
-
-2. [传感器接线](./assets/connection_config.md)
-3. [同步板配置](./assets/firmware_config.md)
-4. 运行Demo
-5. 协议解析
+## [传感器接线](./assets/connection_config.md)
+## [同步板配置](./assets/firmware_config.md)
+## 运行Demo
+## 协议解析
