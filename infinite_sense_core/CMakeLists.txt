@@ -30,7 +30,6 @@ add_library(${PROJECT_NAME} SHARED
     src/ptp.cpp
     include/ptp.h
     src/sensor.h
-    include/messenger.h
 )
 # 检测平台并设置相关变量
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
