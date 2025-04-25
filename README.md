@@ -23,7 +23,7 @@
 🔄 兼容性保障 – 依旧支持旧版本(V3/MINI)。  
 🌐 多平台灵活部署 – (使用ZeroMQ)支持嵌入式/桌面/云端多场景部署。  
 🔗 支持多相机 📷、雷达⦿ 、IMU 🧭 与单 GPS 🛰 的混合信号协同管理。  
-🧩 [支持多同步板](./assets/board_introduction.md) -V3/V4/MINI。
+🧩 [支持多同步板](./assets/board_introduction.md) -V3/V4/MINI。  
 立即升级，体验更高效、更友好的 SDK！🚀
 
 # News
