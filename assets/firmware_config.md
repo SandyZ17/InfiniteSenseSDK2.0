@@ -1,10 +1,14 @@
 # 固件配置
-## 第三代同步板
 
+## 第三代同步板
+固件支持网口和串口配置，配置完成后自动重启。建议采用任意串口工具发送以下指令：
+```aiignore
+{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":20,"hz_cam_2":30,"hz_cam_3":40,"hz_cam_4":50,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":300}
+```
 ## 第四代同步板
 固件支持网口和串口配置，配置完成后自动重启。建议采用任意串口工具发送以下指令：
 ```aiignore
-{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":20,"hz_cam_2":30,"hz_cam_3":40,"hz_cam_4":50,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true}
+{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":20,"hz_cam_2":30,"hz_cam_3":40,"hz_cam_4":50,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}
 ```
 
 配置指令说明：
@@ -22,4 +26,5 @@
   "uart_2_baud_rate": 115200, // GPS波特率（中速模式，用于GPS数据读取）
   "use_gps": true,            // GPS模块启用标志
   "use_pps": true             // PPS精确时钟同步信号启用标志
+  "version": 400              // 固件版本号(V3/MINI：300，V4：400)
 ```
