@@ -37,10 +37,7 @@
 >| RTK/GPS     |                           | NMEA   |
 >| 主机(ARM/X86) | Intel/AMD/Jetson/RockChip/... | PTP    |
 
-### 硬件准备 (Hardware Setup)
-
 # 开始使用
-
 1. 下载SDK源码,编译安装
 ```angular2html
     git clone git@github.com:InfiniteSenseLab/InfiniteSenseSDK2.0.git -b main
@@ -49,6 +46,6 @@
     mkdir build && cd build
     cmake..
 ```
-2. [配置设备](./assets/firmware_config.md)
-3. 运行SDK测试Demo
-4. 阅读SDK文档
+2. [如何接线](./assets/connection_config.md)
+3. [配置设备](./assets/firmware_config.md)
+4. 运行Demo
