@@ -43,8 +43,8 @@
 # 开始使用
 ## 下载·安装
 ```bash
+sudo apt-get install libzmq3-dev # 安装ZeroMQ
 git clone git@github.com:InfiniteSenseLab/InfiniteSenseSDK2.0.git -b main
-sudo apt-get install libzmq3-dev # 安装ZeroMQ依赖
 cd InfiniteSenseSDK2.0
 mkdir build && cd build
 cmake..
