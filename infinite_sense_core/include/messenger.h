@@ -5,6 +5,7 @@
 #include <thread>
 #include <zmq.hpp>
 #include <unordered_set>
+#include <unordered_map>
 namespace infinite_sense {
 class Messenger {
 public:
