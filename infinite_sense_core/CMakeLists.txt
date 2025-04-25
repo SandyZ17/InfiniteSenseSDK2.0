@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(infinite_sense_core VERSION 0.1.0)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake CACHE INTERNAL "" FORCE)
+find_package(ZeroMQ REQUIRED)
 
 set(PROJECT_INSTALL_DIR ${PROJECT_NAME})
 
@@ -46,10 +48,12 @@ message(STATUS "Find MVCAM_LIB_DIR : ${MVCAM_LIB_DIR}")
 target_link_directories(${PROJECT_NAME} PUBLIC
     BEFORE ${MVCAM_LIB_DIR}
     ${CMAKE_INSTALL_RPATH}
+    ${ZeroMQ_INCLUDE_DIRS}
 )
 
 # 链接库
 target_link_libraries(${PROJECT_NAME} PUBLIC
+    ${ZeroMQ_LIBRARIES}
     MvCameraControl
     serial
     udp

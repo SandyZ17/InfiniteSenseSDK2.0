@@ -1,7 +1,7 @@
 #include "infinite_sense.h"
 #include <thread>
 using namespace infinite_sense;
-[[noreturn]] int main() {
+int main() {
   Synchronizer synchronizer;
   // use net link
   // synchronizer.SetNetLink("192.168.1.188", 8888);
