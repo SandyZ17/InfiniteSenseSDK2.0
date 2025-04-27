@@ -3,7 +3,7 @@
 固件支持网口和串口配置，配置完成后自动重启并加载最新配置。建议采用任意串口工具发送以下指令：
 
 ```python
-{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":20,"hz_cam_2":30,"hz_cam_3":40,"hz_cam_4":50,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}
+{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":1,"hz_cam_2":2,"hz_cam_3":4,"hz_cam_4":8,"hz_imu_2":1,"xtal_diff":0,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}
 ```
 指令说明：
 ```python
