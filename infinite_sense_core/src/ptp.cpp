@@ -32,10 +32,10 @@ void Ptp::ReceivePtpData(const nlohmann::json &data) {
           {"b", offset},
       };
       std::string out = jsons.dump() + "\n";
-      if (net_ptr_ != nullptr) {
+      if (net_ptr_) {
         net_ptr_->sendTo(out.data(), out.size(), target_ip_, port_);
         updated_t1_t2_ = false;
-      } else if (serial_ptr_ != nullptr) {
+      } else if (serial_ptr_) {
         serial_ptr_->write(reinterpret_cast<uint8_t *>(out.data()), out.size());
         updated_t1_t2_ = false;
       }
@@ -53,9 +53,9 @@ void Ptp::SendPtpData() const {
       {"a", mark},
   };
   std::string out = data.dump() + "\n";
-  if (net_ptr_ != nullptr) {
+  if (net_ptr_) {
     net_ptr_->sendTo(out.data(), out.size(), target_ip_, port_);
-  } else if (serial_ptr_ != nullptr) {
+  } else if (serial_ptr_) {
     serial_ptr_->write(reinterpret_cast<const uint8_t *>(out.data()), out.size());
   }
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
