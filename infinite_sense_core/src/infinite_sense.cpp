@@ -63,7 +63,7 @@ void Synchronizer::Stop() const {
 
 void Synchronizer::PrintSummary() {
   TopicMonitor::GetInstance().Start();
-  std::this_thread::sleep_for(std::chrono::milliseconds{1000});
+  std::this_thread::sleep_for(std::chrono::milliseconds{1001});
   TopicMonitor::GetInstance().Stop();
   LOG(INFO) << TopicMonitor::GetInstance();
 }
