@@ -4,7 +4,8 @@
 (可选)串口工具安装：
 
 ```bash
-sudo apt-get install cutecom
+sudo apt-get install cutecom # 下载
+sudo cutecom                 # 启动
 ```
 
 固件支持网口和串口配置，配置完成后自动重启并加载最新配置。打开任意串口工具发送以下指令：
