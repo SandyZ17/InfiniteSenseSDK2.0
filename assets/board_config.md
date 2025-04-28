@@ -5,7 +5,7 @@
 ```python
 {"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":1,"hz_cam_2":2,"hz_cam_3":4,"hz_cam_4":8,"hz_imu_2":10,"xtal_diff":0,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}\n
 ```
-指令说明：
+对应指令说明：
 ```python
   "f": "cfg",                 // 配置文件类型标识符（固定为"cfg"）
   "port": 8888,               // 网络通信端口号
