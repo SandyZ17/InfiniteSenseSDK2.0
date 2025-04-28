@@ -24,9 +24,9 @@ sudo cutecom                 # 启动
   "hz_cam_3": 40,             // 相机3触发频率（单位：Hz，建议≤100Hz）
   "hz_cam_4": 50,             // 相机4触发频率（单位：Hz，建议≤100Hz）
   "hz_imu_2":1                // IMU2触发频率（单位：Hz，建议≤100Hz）
-  "uart_0_baud_rate": 921600, // 通讯波特率（高速模式，用于时间同步/传感器数据）
-  "uart_1_baud_rate": 9600,   // PPS波特率（低速模式，用于雷达同步）
-  "uart_2_baud_rate": 115200, // GPS波特率（中速模式，用于GPS数据读取）
+  "uart_0_baud_rate": 921600, // 通讯波特率(Typc)（高速模式，用于时间同步/传感器数据）
+  "uart_1_baud_rate": 9600,   // PPS波特率(Lidar)（低速模式，用于雷达同步）
+  "uart_2_baud_rate": 115200, // GPS波特率(GPS/RTK)（中速模式，用于GPS数据读取）
   "use_gps": true,            // GPS模块启用标志
   "use_pps": true,            // PPS精确时钟同步信号启用标志
   "xtal_diff":0,              // 晶振偏差修正
