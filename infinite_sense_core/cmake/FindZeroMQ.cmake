@@ -29,6 +29,4 @@ if (NOT TARGET libzmq)
 endif ()
 
 include(FindPackageHandleStandardArgs)
-# handle the QUIETLY and REQUIRED arguments and set ZeroMQ_FOUND to TRUE
-# if all listed variables are TRUE
 find_package_handle_standard_args(ZeroMQ DEFAULT_MSG ZeroMQ_LIBRARIES ZeroMQ_INCLUDE_DIRS)

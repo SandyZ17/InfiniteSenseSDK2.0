@@ -22,11 +22,11 @@ add_subdirectory(third_party/serial)
 add_subdirectory(third_party/udp)
 add_library(${PROJECT_NAME} SHARED
     src/infinite_sense.cpp
-    src/trigger_manager.cpp
-    src/serial_manager.cpp
-    src/cam_manager.cpp
+        src/trigger.cpp
+        src/serial.cpp
+        src/cam.cpp
     src/image.cpp
-    src/net_manager.cpp
+        src/net.cpp
     src/messenger.cpp
     src/ptp.cpp
     include/ptp.h

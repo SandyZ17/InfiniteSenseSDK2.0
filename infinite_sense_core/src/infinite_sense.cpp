@@ -1,9 +1,9 @@
 #include "infinite_sense.h"
 
-#include "trigger_manager.h"
-#include "net_manager.h"
-#include "serial_manager.h"
-#include "cam_manager.h"
+#include "trigger.h"
+#include "net.h"
+#include "serial.h"
+#include "cam.h"
 #include "messenger.h"
 #include "log.h"
 #include "image.h"

@@ -1,7 +1,7 @@
 #include "infinite_sense.h"
 #include "ptp.h"
 #include "sensor.h"
-#include "net_manager.h"
+#include "net.h"
 namespace infinite_sense {
 NetManager::NetManager(std::string target_ip, const unsigned short port)
     : port_(port), target_ip_(std::move(target_ip)) {

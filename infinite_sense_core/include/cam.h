@@ -21,10 +21,10 @@ class CamManger {
 
  private:
   void Receive(void* handle, const std::string&) const;
+  bool is_running_{false};
   std::vector<int> rets_;
   std::vector<void*> handles_;
   std::vector<std::thread> cam_threads_;
-  bool is_running_{false};
   std::map<std::string, TriggerDevice> params_;
 };
 }  // namespace infinite_sense

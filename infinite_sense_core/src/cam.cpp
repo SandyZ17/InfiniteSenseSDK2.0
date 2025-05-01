@@ -1,4 +1,4 @@
-#include "cam_manager.h"
+#include "cam.h"
 #include "infinite_sense.h"
 #include "MvCameraControl.h"
 #include "log.h"

@@ -1,7 +1,7 @@
 #pragma once
 #include "json.hpp"
 #include "infinite_sense.h"
-#include "trigger_manager.h"
+#include "trigger.h"
 
 namespace infinite_sense {
 
