@@ -1,5 +1,5 @@
 #include "ptp.h"
-#include <serial.h>
+#include <ser.h>
 #include <thread>
 namespace infinite_sense {
 void Ptp::SetSerialPtr(const std::shared_ptr<serial::Serial> &serial_ptr) { serial_ptr_ = serial_ptr; }

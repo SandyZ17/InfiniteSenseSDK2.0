@@ -21,16 +21,16 @@ endif ()
 add_subdirectory(third_party/serial)
 add_subdirectory(third_party/udp)
 add_library(${PROJECT_NAME} SHARED
-    src/infinite_sense.cpp
-        src/trigger.cpp
-        src/serial.cpp
-        src/cam.cpp
-    src/image.cpp
-        src/net.cpp
-    src/messenger.cpp
-    src/ptp.cpp
-    include/ptp.h
-    src/sensor.h
+  src/infinite_sense.cpp
+  src/trigger.cpp
+  src/ser.cpp
+  src/cam.cpp
+  src/image.cpp
+  src/net.cpp
+  src/messenger.cpp
+  src/ptp.cpp
+  include/ptp.h
+  src/sensor.h
 )
 # 检测平台并设置相关变量
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")

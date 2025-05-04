@@ -2,7 +2,7 @@
 
 #include "trigger.h"
 #include "net.h"
-#include "serial.h"
+#include "ser.h"
 #include "cam.h"
 #include "messenger.h"
 #include "log.h"

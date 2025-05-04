@@ -10,7 +10,6 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include <stdexcept>
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -18,7 +17,6 @@
 #include <cstdlib>
 
 #include <glob.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 

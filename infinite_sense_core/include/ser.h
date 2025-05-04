@@ -1,6 +1,6 @@
 #pragma once
+#include "ser.h"
 #include "serial.h"
-
 #include <thread>
 #include <memory>
 
