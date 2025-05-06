@@ -1,5 +1,4 @@
 #include "infinite_sense.h"
-#include <thread>
 using namespace infinite_sense;
 int main() {
   Synchronizer synchronizer;
