@@ -3,8 +3,10 @@ using namespace infinite_sense;
 int main() {
   Synchronizer synchronizer;
   /*
+   使用网口连接
    synchronizer.SetNetLink("192.168.1.188", 8888);
   */
+  // 使用USB连接
   synchronizer.SetSerialLink("/dev/ttyACM0", 460800);
   /*
     使用工业相机系列
@@ -12,6 +14,7 @@ int main() {
     params["camera_1"] = TriggerDevice::CAM_1; //camera_1:表示设备的名称，TriggerDevice::CAM_1:使用同步板CAM_1端口触发
     synchronizer.UseMvCam(params);
   */
+
   // 开启同步
   synchronizer.Start();
   Synchronizer::PrintSummary();
