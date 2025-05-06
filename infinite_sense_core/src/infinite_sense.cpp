@@ -6,7 +6,6 @@
 #include "cam.h"
 #include "messenger.h"
 #include "log.h"
-#include "image.h"
 
 namespace infinite_sense {
 Synchronizer::Synchronizer() {
