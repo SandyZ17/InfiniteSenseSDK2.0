@@ -9,7 +9,7 @@ int main() {
   // 使用USB连接
   synchronizer.SetSerialLink("/dev/ttyACM0", 460800);
   /*
-    使用工业相机系列
+    如使用工业相机, 需要指定 相机名称 和 同步板的触发端口
     std::map<std::string, TriggerDevice> params;
     params["camera_1"] = TriggerDevice::CAM_1; //camera_1:表示设备的名称，TriggerDevice::CAM_1:使用同步板CAM_1端口触发
     synchronizer.UseMvCam(params);
