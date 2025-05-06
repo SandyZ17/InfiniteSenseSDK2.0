@@ -68,7 +68,6 @@ void SerialManager::Receive() const {
         if (json_data.empty()) {
           continue;
         }
-        // std::cout << json_data.dump() << std::endl;
         ptp_->ReceivePtpData(json_data);
         ProcessTriggerData(json_data);
         ProcessIMUData(json_data);

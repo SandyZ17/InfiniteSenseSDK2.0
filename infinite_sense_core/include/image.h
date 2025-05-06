@@ -104,7 +104,8 @@ class GMat {
  public:
   GMat();
 
-  GMat(int rows_, int cols_, int type = GMatType<>::Type, uchar* src = nullptr, bool copy = false, int image_align = 16);
+  GMat(int rows_, int cols_, int type = GMatType<>::Type, uchar* src = nullptr, bool copy = false,
+       int image_align = 16);
 
   GMat(const GMat& ref);
 
