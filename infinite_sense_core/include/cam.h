@@ -20,7 +20,7 @@ class CamManger {
   void Restart();
 
  private:
-  void Receive(void* handle, const std::string&) const;
+  void Receive(void* handle, const std::string&);
   bool is_running_{false};
   std::vector<int> rets_;
   std::vector<void*> handles_;

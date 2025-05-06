@@ -2,7 +2,7 @@
 #include "infinite_sense.h"
 #include "MvCameraControl.h"
 #include "log.h"
-
+#include "trigger.h"
 namespace infinite_sense {
 bool IsColor(const MvGvspPixelType type) {
   switch (type) {
@@ -190,7 +190,7 @@ void CamManger::Stop() {
     LOG(INFO) << "Exit  " << i << "  cam ";
   }
 }
-void CamManger::Receive(void *handle, const std::string &name) const {
+void CamManger::Receive(void *handle, const std::string &name)  {
   unsigned int last_count = 0;
   MV_FRAME_OUT st_out_frame;
   CamData cam_data;
@@ -204,10 +204,18 @@ void CamManger::Receive(void *handle, const std::string &name) const {
       if (n_ret != MV_OK) {
         LOG(ERROR) << "Get ExposureTime fail! n_ret [0x" << std::hex << n_ret << "]";
       }
-      // {
-      //   cam_data.time_stamp_us =
-      //       DataManger::GetInstance().GetLastTiggerTime() + static_cast<uint64_t>(expose_time.fCurValue / 2.);
-      // }
+      // 这里的time_stamp_us是相机触发时间，需要加上曝光时间的一半，以获得相机拍摄的时间
+      if (params_.find(name) == params_.end()) {
+        LOG(ERROR) << "cam " << name << " not found!";
+      }
+      else {
+        if (uint64_t time; GET_LAST_TRIGGER_STATUS(params_[name], time)) {
+          cam_data.time_stamp_us = time + static_cast<uint64_t>(expose_time.fCurValue / 2.);
+        }
+        else {
+          LOG(ERROR) << "cam " << name << " not found!";
+        }
+      }
       MvGvspPixelType en_dst_pixel_type = PixelType_Gvsp_Undefined;
       unsigned int n_channel_num = 0;
       // 如果是彩色则转成RGB8
