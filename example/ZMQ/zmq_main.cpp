@@ -1,6 +1,8 @@
 #include "infinite_sense.h"
 using namespace infinite_sense;
 int main() {
+
+  // 1.创建同步器
   Synchronizer synchronizer;
   /*
    使用网口连接
@@ -15,13 +17,27 @@ int main() {
     synchronizer.UseMvCam(params);
   */
 
-  // 开启同步
+  // 2.开启同步
   synchronizer.Start();
+
+  // 3.订阅数据
   Synchronizer::PrintSummary();
+  zmq::context_t context(1);
+  zmq::socket_t subscriber(context, zmq::socket_type::sub);
+  subscriber.connect("tcp://localhost:5555");
+
+  const std::string topic = "imu_1";   // 订阅特定主题（如,板载IMU数据： "imu_1"）
+  subscriber.setsockopt(ZMQ_SUBSCRIBE, topic.c_str(), topic.size());
+  zmq::message_t msg;
   while (true) {
-    std::this_thread::sleep_for(std::chrono::milliseconds{1000});
+    if (subscriber.recv(msg, zmq::recv_flags::dontwait)) {
+      if (subscriber.get(zmq::sockopt::rcvmore)) {
+        zmq::message_t dummy;
+        subscriber.recv(dummy);
+      }
+    }
   }
-  // 停止同步
+  // 4.停止同步
   synchronizer.Stop();
   return 0;
 }
