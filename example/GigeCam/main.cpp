@@ -14,7 +14,7 @@ int main() {
   // 3.开启同步
   synchronizer.Start();
 
-  // 4.接受数据
+  // 4.接收数据
   Synchronizer::PrintSummary();
   zmq::context_t context(1);
   zmq::socket_t subscriber(context, zmq::socket_type::sub);
