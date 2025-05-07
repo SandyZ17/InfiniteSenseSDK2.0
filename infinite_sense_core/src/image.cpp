@@ -2,6 +2,7 @@
 #include "image.h"
 #include <cassert>
 #include <cstddef>
+#include <cstdlib>
 #include <cstring>
 #include <mutex>
 namespace infinite_sense {
