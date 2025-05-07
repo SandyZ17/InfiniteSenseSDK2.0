@@ -6,7 +6,7 @@
 namespace infinite_sense {
 
 class NetManager;
-class SerialManager;
+class UsbManager;
 class CamManger;
 class TriggerManger;
 class Messenger;
@@ -48,7 +48,7 @@ class Synchronizer {
    * @param serial_dev 串口设备名称（如 "/dev/ttyUSB0"）。
    * @param serial_baud_rate 波特率（如 115200）。
    */
-  void SetSerialLink(std::string serial_dev, int serial_baud_rate);
+  void SetUsbLink(std::string serial_dev, int serial_baud_rate);
 
   /**
    * @brief 配置网络连接参数。
@@ -97,7 +97,7 @@ class Synchronizer {
   std::shared_ptr<NetManager> net_manager_{nullptr};
 
   /// 串口管理器
-  std::shared_ptr<SerialManager> serial_manager_{nullptr};
+  std::shared_ptr<UsbManager> serial_manager_{nullptr};
 
   /// 相机管理器
   std::shared_ptr<CamManger> cam_manager_{nullptr};

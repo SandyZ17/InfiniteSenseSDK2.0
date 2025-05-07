@@ -1,10 +1,10 @@
 
-#include "ser.h"
+#include "usb.h"
 #include "infinite_sense.h"
 #include "ptp.h"
 #include "sensor.h"
 namespace infinite_sense {
-SerialManager::SerialManager(const std::string &port, const int baud_rate) {
+UsbManager::UsbManager(const std::string &port, const int baud_rate) {
   port_ = port;
   serial_ptr_ = std::make_unique<serial::Serial>();
   try {
@@ -25,10 +25,10 @@ SerialManager::SerialManager(const std::string &port, const int baud_rate) {
     LOG(ERROR) << "Serial port: " << serial_ptr_->getPort() << " initialized and opened.";
   }
   ptp_ = std::make_unique<Ptp>();
-  ptp_->SetSerialPtr(serial_ptr_);
+  ptp_->SetUsbPtr(serial_ptr_);
 }
 
-SerialManager::~SerialManager() {
+UsbManager::~UsbManager() {
   if (serial_ptr_->isOpen()) {
     serial_ptr_->close();
     LOG(ERROR) << "Serial port: " << serial_ptr_->getPort() << " closed.";
@@ -37,14 +37,14 @@ SerialManager::~SerialManager() {
   tx_thread_.join();
 }
 
-void SerialManager::Start() {
+void UsbManager::Start() {
   started_ = true;
   rx_thread_ = std::thread([this] { Receive(); });
   tx_thread_ = std::thread([this] { TimeStampSynchronization(); });
   LOG(INFO) << "Serial manager started";
 }
 
-void SerialManager::Stop() {
+void UsbManager::Stop() {
   started_ = false;
   if (serial_ptr_->isOpen()) {
     serial_ptr_->close();
@@ -54,7 +54,7 @@ void SerialManager::Stop() {
   tx_thread_.join();
   LOG(INFO) << "Serial manager stopped";
 }
-void SerialManager::Receive() const {
+void UsbManager::Receive() const {
   while (started_) {
     if (serial_ptr_->available()) {
       std::string serial_recv = serial_ptr_->readline();
@@ -81,7 +81,7 @@ void SerialManager::Receive() const {
     std::this_thread::sleep_for(std::chrono::microseconds{10});
   }
 }
-void SerialManager::TimeStampSynchronization() const {
+void UsbManager::TimeStampSynchronization() const {
   while (started_) {
     ptp_->SendPtpData();
   }

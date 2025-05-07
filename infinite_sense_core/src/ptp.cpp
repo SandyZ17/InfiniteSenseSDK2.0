@@ -1,8 +1,8 @@
 #include "ptp.h"
-#include <ser.h>
+#include <usb.h>
 #include <thread>
 namespace infinite_sense {
-void Ptp::SetSerialPtr(const std::shared_ptr<serial::Serial> &serial_ptr) { serial_ptr_ = serial_ptr; }
+void Ptp::SetUsbPtr(const std::shared_ptr<serial::Serial> &serial_ptr) { serial_ptr_ = serial_ptr; }
 void Ptp::SetNetPtr(const std::shared_ptr<UDPSocket> &net_ptr, const std::string &target_ip,
                     const unsigned short port) {
   port_ = port;

@@ -1,16 +1,16 @@
 #pragma once
-#include "ser.h"
+#include "usb.h"
 #include "serial.h"
 #include <thread>
 #include <memory>
 
 namespace infinite_sense {
 class Ptp;
-class SerialManager {
+class UsbManager {
  public:
-  explicit SerialManager(const std::string &port, int baud_rate);
+  explicit UsbManager(const std::string &port, int baud_rate);
 
-  ~SerialManager();
+  ~UsbManager();
 
   [[nodiscard]] bool IsAvailable() const { return serial_ptr_->isOpen(); }
 

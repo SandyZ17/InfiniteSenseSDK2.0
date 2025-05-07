@@ -23,7 +23,7 @@ add_subdirectory(third_party/udp)
 add_library(${PROJECT_NAME} SHARED
   src/infinite_sense.cpp
   src/trigger.cpp
-  src/ser.cpp
+  src/usb.cpp
   src/cam.cpp
   src/image.cpp
   src/net.cpp

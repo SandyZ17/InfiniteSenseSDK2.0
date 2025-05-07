@@ -2,7 +2,7 @@
 
 #include "trigger.h"
 #include "net.h"
-#include "ser.h"
+#include "usb.h"
 #include "cam.h"
 #include "messenger.h"
 #include "log.h"
@@ -21,10 +21,10 @@ void Synchronizer::SetNetLink(std::string net_dev, const unsigned int port) {
   net_port_ = port;
   net_manager_ = std::make_shared<NetManager>(net_ip_, net_port_);
 }
-void Synchronizer::SetSerialLink(std::string serial_dev, const int serial_baud_rate) {
+void Synchronizer::SetUsbLink(std::string serial_dev, const int serial_baud_rate) {
   serial_dev_ = std::move(serial_dev);
   serial_baud_rate_ = serial_baud_rate;
-  serial_manager_ = std::make_shared<SerialManager>(serial_dev_, serial_baud_rate_);
+  serial_manager_ = std::make_shared<UsbManager>(serial_dev_, serial_baud_rate_);
   net_manager_ = nullptr;
 }
 void Synchronizer::UseMvCam(const std::map<string, TriggerDevice>& params) {
