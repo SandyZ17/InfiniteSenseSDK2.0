@@ -13,6 +13,11 @@ class Ptp {
   void SetNetPtr(const std::shared_ptr<UDPSocket> &, const std::string &, unsigned short);
 
  private:
+  void HandleTimeSyncRequest(const nlohmann::json &data);
+  void HandleTimeSyncResponse(const nlohmann::json &data);
+  static uint64_t GetCurrentTimeUs();
+  void SendJson(const nlohmann::json &data) const;
+
   std::shared_ptr<serial::Serial> serial_ptr_{nullptr};
   std::shared_ptr<UDPSocket> net_ptr_{nullptr};
   unsigned short port_{};

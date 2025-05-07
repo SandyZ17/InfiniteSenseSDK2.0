@@ -8,7 +8,7 @@ namespace infinite_sense {
 class Ptp;
 class UsbManager {
  public:
-  explicit UsbManager(const std::string &, int);
+  explicit UsbManager(std::string , int);
   ~UsbManager();
   void Start();
   void Stop();
