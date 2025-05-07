@@ -4,27 +4,26 @@
 #include "messenger.h"
 #include "infinite_sense.h"
 namespace infinite_sense {
-class CamManger {
- public:
-  explicit CamManger(const std::map<std::string, TriggerDevice>& params) : params_(params) {}
-  ~CamManger();
+class Cam{
+public:
+  Cam();
+  explicit Cam(const std::map<std::string, TriggerDevice>& params) : params_(params) {}
+  virtual ~Cam();
 
-  CamManger(const CamManger&) = delete;
-  CamManger& operator=(const CamManger&) = delete;
+  Cam(const Cam&) = delete;
+  Cam& operator=(const Cam&) = delete;
 
-  bool Initialization();
-  void Stop();
-  void Start();
+  virtual bool Initialization();
+  virtual void Stop();
+  virtual void Start();
+  virtual void Restart();
   void Enable() { is_running_ = true; }
   void Disable() { is_running_ = false; }
-  void Restart();
-
- private:
-  void Receive(void* handle, const std::string&);
+private:
+  virtual void Receive(void* handle, const std::string&);
   bool is_running_{false};
-  std::vector<int> rets_;
-  std::vector<void*> handles_;
   std::vector<std::thread> cam_threads_;
   std::map<std::string, TriggerDevice> params_;
 };
+
 }  // namespace infinite_sense

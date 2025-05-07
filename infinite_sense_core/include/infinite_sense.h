@@ -1,8 +1,9 @@
 #pragma once
 #include "log.h"
-#include "data.h"
+#include "config.h"
 #include "messenger.h"
-
+#include "cam.h"
+#include "trigger.h"
 namespace infinite_sense {
 
 class NetManager;
@@ -10,7 +11,6 @@ class UsbManager;
 class CamManger;
 class TriggerManger;
 class Messenger;
-
 /**
  * @class Synchronizer
  * @brief 同步器类，负责统一协调网络、串口、相机等模块的启动与配置，管理多传感器系统的时间同步。
@@ -59,7 +59,7 @@ class Synchronizer {
   void SetNetLink(std::string net_dev, unsigned int port);
 
   /**
-   * @brief 使用 MV（迈德威视）相机，并配置其对应的触发设备。
+   * @brief 使用工业相机，并配置其对应的触发设备。
    *
    * @param params 可选参数：映射相机名称到 TriggerDevice 枚举。
    */
@@ -100,7 +100,7 @@ class Synchronizer {
   std::shared_ptr<UsbManager> serial_manager_{nullptr};
 
   /// 相机管理器
-  std::shared_ptr<CamManger> cam_manager_{nullptr};
+  std::shared_ptr<Cam> cam_manager_{nullptr};
 };
 
 }  // namespace infinite_sense

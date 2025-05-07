@@ -24,13 +24,10 @@ add_library(${PROJECT_NAME} SHARED
   src/infinite_sense.cpp
   src/trigger.cpp
   src/usb.cpp
-  src/cam.cpp
   src/image.cpp
   src/net.cpp
   src/messenger.cpp
   src/ptp.cpp
-  include/ptp.h
-  src/sensor.h
 )
 # 检测平台并设置相关变量
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")

@@ -2,7 +2,7 @@
 #include "usb.h"
 #include "infinite_sense.h"
 #include "ptp.h"
-#include "sensor.h"
+#include "../include/data.h"
 namespace infinite_sense {
 UsbManager::UsbManager(const std::string &port, const int baud_rate) {
   port_ = port;

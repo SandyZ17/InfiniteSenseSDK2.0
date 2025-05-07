@@ -1,8 +1,6 @@
-#include "cam.h"
+#include "mvcam.h"
 #include "infinite_sense.h"
 #include "MvCameraControl.h"
-#include "log.h"
-#include "trigger.h"
 namespace infinite_sense {
 bool IsColor(const MvGvspPixelType type) {
   switch (type) {

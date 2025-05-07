@@ -1,45 +1,60 @@
 #pragma once
-#include <cstdint>
-#include <string>
-#include "image.h"
+#include "infinite_sense.h"
+
 namespace infinite_sense {
-struct ImuData {
-  uint64_t time_stamp_us;
-  float temperature;
-  std::string name;
-  float a[3];
-  float g[3];
-  float q[4];
+
+inline void ProcessTriggerData(const nlohmann::json &data) {
+  if (data["f"] != "t") {
+    return;
+  }
+  const uint64_t time_stamp = data["t"];
+  const uint16_t status = data["s"];
+  const uint64_t count  =data["c"];
+  SET_LAST_TRIGGER_STATUS(time_stamp, status);
 };
 
-struct CamData {
-  uint64_t time_stamp_us;
-  std::string name;
-  GMat image;
+inline void ProcessIMUData(const nlohmann::json &data) {
+  if (data["f"] != "imu") {
+    return;
+  }
+  ImuData imu{};
+  const uint64_t time_stamp = data["t"];
+  const uint64_t count = data["c"];
+  imu.time_stamp_us = time_stamp;
+  // std::cout << imu.time_stamp_us << std::endl;
+  imu.a[0] = data["d"][0];
+  imu.a[1] = data["d"][1];
+  imu.a[2] = data["d"][2];
+  imu.g[0] = data["d"][3];
+  imu.g[1] = data["d"][4];
+  imu.g[2] = data["d"][5];
+  imu.temperature = data["d"][6];
+  imu.q[0] = data["q"][0];
+  imu.q[1] = data["q"][1];
+  imu.q[2] = data["q"][2];
+  imu.q[3] = data["q"][3];
+  Messenger::GetInstance().PubStruct("imu1",&imu,sizeof(imu));
 };
 
-struct LaserData {
-  uint64_t time_stamp_us;
-  std::string name;
+inline void ProcessGPSData(const nlohmann::json &data) {
+  if (data["f"] != "GNGGA") {
+    return;
+  }
+  GPSData gps{};
+  gps.latitude = data["d"][0];
+  gps.longitude = data["d"][1];
+  gps.gps_stamp_us = data["d"][2];
+  gps.gps_stamp_us_trigger = data["d"][3];
+  gps.time_stamp_us = data["t"];
+  Messenger::GetInstance().PubStruct("gps",&gps,sizeof(gps));
 };
 
-struct GPSData {
-  uint64_t time_stamp_us;
-  uint64_t gps_stamp_us;
-  uint64_t gps_stamp_us_trigger;
-  std::string name;
-  float latitude;
-  float longitude;
+
+inline void ProcessLOGData(const nlohmann::json &data) {
+  if (data["f"] != "log") {
+    return;
+  }
+  LOG(data["l"]) << data["msg"];
 };
 
-enum TriggerDevice {
-  IMU_1 = 0,  // internal imu
-  IMU_2 = 1,  // external imu
-  CAM_1 = 2,  // camera 1
-  CAM_2 = 3,  // camera 2
-  CAM_3 = 4,  // camera 3
-  CAM_4 = 5,  // camera 4
-  LASER = 6,  // laser pps
-  GPS = 7,    // gps pps
-};
 }  // namespace infinite_sense
