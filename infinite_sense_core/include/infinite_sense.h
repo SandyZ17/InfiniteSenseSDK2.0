@@ -63,7 +63,7 @@ class Synchronizer {
    *
    * @param cam
    */
-  void UseCam(const std::shared_ptr<Sensor> &cam);
+  void UseCam(const std::shared_ptr<Sensor>& cam);
 
   /**
    * @brief 获取指定设备最近一次的触发时间（静态方法）。

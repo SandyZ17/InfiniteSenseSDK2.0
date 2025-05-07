@@ -8,11 +8,11 @@
 
 namespace infinite_sense {
 Synchronizer::Synchronizer() {
-LOG(INFO) << "\n"
-         <<  "  ▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖▗▄▄▄▖▗▄▄▄▖ ▗▄▄▖▗▄▄▄▖▗▖  ▗▖ ▗▄▄▖▗▄▄▄▖" << "\n"
-         <<  "    █  ▐▛▚▖▐▌▐▌     █  ▐▛▚▖▐▌  █    █  ▐▌   ▐▌   ▐▌   ▐▛▚▖▐▌▐▌   ▐▌   " << "\n"
-         <<  "    █  ▐▌ ▝▜▌▐▛▀▀▘  █  ▐▌ ▝▜▌  █    █  ▐▛▀▀▘ ▝▀▚▖▐▛▀▀▘▐▌ ▝▜▌ ▝▀▚▖▐▛▀▀▘" << "\n"
-         <<  "  ▗▄█▄▖▐▌  ▐▌▐▌   ▗▄█▄▖▐▌  ▐▌▗▄█▄▖  █  ▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▐▌  ▐▌▗▄▄▞▘▐▙▄▄▖";
+  LOG(INFO) << "\n"
+            << "  ▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖▗▄▄▄▖▗▄▄▄▖ ▗▄▄▖▗▄▄▄▖▗▖  ▗▖ ▗▄▄▖▗▄▄▄▖" << "\n"
+            << "    █  ▐▛▚▖▐▌▐▌     █  ▐▛▚▖▐▌  █    █  ▐▌   ▐▌   ▐▌   ▐▛▚▖▐▌▐▌   ▐▌   " << "\n"
+            << "    █  ▐▌ ▝▜▌▐▛▀▀▘  █  ▐▌ ▝▜▌  █    █  ▐▛▀▀▘ ▝▀▚▖▐▛▀▀▘▐▌ ▝▜▌ ▝▀▚▖▐▛▀▀▘" << "\n"
+            << "  ▗▄█▄▖▐▌  ▐▌▐▌   ▗▄█▄▖▐▌  ▐▌▗▄█▄▖  █  ▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▐▌  ▐▌▗▄▄▞▘▐▙▄▄▖";
 };
 void Synchronizer::SetLogPath(const std::string& path) { SetLogDestination(FATAL, path.c_str()); }
 void Synchronizer::SetNetLink(std::string net_dev, const unsigned int port) {
@@ -26,11 +26,9 @@ void Synchronizer::SetUsbLink(std::string serial_dev, const int serial_baud_rate
   serial_manager_ = std::make_shared<UsbManager>(serial_dev_, serial_baud_rate_);
   net_manager_ = nullptr;
 }
-void Synchronizer::UseCam(const std::shared_ptr<Sensor> &cam) {
-  cam_manager_ = cam;
-}
+void Synchronizer::UseCam(const std::shared_ptr<Sensor>& cam) { cam_manager_ = cam; }
 bool Synchronizer::GetLastTriggerTime(const TriggerDevice dev, uint64_t time) {
-  return GET_LAST_TRIGGER_STATUS(dev,time);
+  return GET_LAST_TRIGGER_STATUS(dev, time);
 }
 void Synchronizer::Start() const {
   if (net_manager_) {

@@ -46,56 +46,51 @@ void Messenger::PubStruct(const std::string &topic, const void *data, const size
     LOG(ERROR) << "Exception: " << e.what();
   }
 }
-std::string Messenger::GetPubEndpoint() const {
-  return  endpoint_;
-}
+std::string Messenger::GetPubEndpoint() const { return endpoint_; }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 std::unordered_set<std::string> TopicMonitor::GetTopics() const {
-    std::lock_guard lock(topics_mutex_);
-    return topics_;  // 返回副本保证线程安全
+  std::lock_guard lock(topics_mutex_);
+  return topics_;  // 返回副本保证线程安全
 }
 // 启动监控线程
 void TopicMonitor::Start() {
-    if (monitor_thread_.joinable()) {
-        return;
-    }
-    should_run_.store(true);
-    monitor_thread_ = std::thread(&TopicMonitor::MonitorLoop, this);
+  if (monitor_thread_.joinable()) {
+    return;
+  }
+  should_run_.store(true);
+  monitor_thread_ = std::thread(&TopicMonitor::MonitorLoop, this);
 }
 
 // 停止监控
 void TopicMonitor::Stop() {
-    if (!should_run_.load()) {
-        return;
-    }
-    should_run_.store(false);
-    if (monitor_thread_.joinable()) {
-        monitor_thread_.join();
-    }
+  if (!should_run_.load()) {
+    return;
+  }
+  should_run_.store(false);
+  if (monitor_thread_.joinable()) {
+    monitor_thread_.join();
+  }
 }
-TopicMonitor::TopicMonitor()
-    : context_(1),
-      subscriber_(context_, ZMQ_SUB),
-      should_run_(false) {
-    try {
-        subscriber_.connect(Messenger::GetInstance().GetPubEndpoint());
-        subscriber_.set(zmq::sockopt::subscribe, "");
-    } catch (const zmq::error_t& e) {
-        LOG(ERROR) << "[TopicMonitor] Initialization failed: " << e.what();
-        throw;
-    }
+TopicMonitor::TopicMonitor() : context_(1), subscriber_(context_, ZMQ_SUB), should_run_(false) {
+  try {
+    subscriber_.connect(Messenger::GetInstance().GetPubEndpoint());
+    subscriber_.set(zmq::sockopt::subscribe, "");
+  } catch (const zmq::error_t &e) {
+    LOG(ERROR) << "[TopicMonitor] Initialization failed: " << e.what();
+    throw;
+  }
 }
 TopicMonitor::~TopicMonitor() {
-    Stop();
-    try {
-        subscriber_.close();
-        context_.close();
-    } catch (const zmq::error_t& e) {
-        LOG(ERROR) << "[TopicMonitor] Cleanup error: " << e.what();
-    }
+  Stop();
+  try {
+    subscriber_.close();
+    context_.close();
+  } catch (const zmq::error_t &e) {
+    LOG(ERROR) << "[TopicMonitor] Cleanup error: " << e.what();
+  }
 }
 // 监控线程主循环
 void TopicMonitor::MonitorLoop() {
@@ -115,12 +110,11 @@ void TopicMonitor::MonitorLoop() {
           subscriber_.recv(dummy);
         }
       }
-    } catch (const zmq::error_t& e) {
+    } catch (const zmq::error_t &e) {
       if (e.num() != ETERM) {
       }
     }
   }
 }
-
 
 }  // namespace infinite_sense
