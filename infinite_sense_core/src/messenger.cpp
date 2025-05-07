@@ -11,14 +11,22 @@ Messenger::Messenger() {
   try {
     publisher_.bind("tcp://*:0");
     endpoint_ = publisher_.get(zmq::sockopt::last_endpoint);
-    LOG(INFO) << "ZMQ PUB: " << endpoint_;
+    LOG(INFO) << "Publisher: " << endpoint_;
   } catch (const zmq::error_t &e) {
     LOG(ERROR) << "Failed to bind ZMQ publisher: " << e.what();
     context_.close();
     publisher_.close();
   }
+  asker_ = zmq::socket_t(context_, zmq::socket_type::rep);
+  asker_.bind("tcp://*:4565");
+  ask_thread_ = std::thread([this] { WaitAsk(); });
 }
-Messenger::~Messenger() { publisher_.close(); }
+Messenger::~Messenger() {
+  publisher_.close();
+  while (ask_thread_.joinable()) {
+    ask_thread_.join();
+  }
+}
 void Messenger::Pub(const std::string &topic, const std::string &metadata) {
   try {
     zmq::message_t topic_msg(topic.size());
@@ -47,4 +55,18 @@ void Messenger::PubStruct(const std::string &topic, const void *data, const size
 }
 std::string Messenger::GetPubEndpoint() const { return endpoint_; }
 
+[[noreturn]] void Messenger::WaitAsk() {
+  while (true) {
+    zmq::message_t request;
+    asker_.recv(request, zmq::recv_flags::none);
+    std::string received_msg(static_cast<char *>(request.data()), request.size());
+    if (received_msg == "ask_endpoint") {
+      std::string reply_msg = GetPubEndpoint();
+      zmq::message_t reply(reply_msg.size());
+      memcpy(reply.data(), reply_msg.data(), reply_msg.size());
+      asker_.send(reply, zmq::send_flags::none);
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  }
+}
 }  // namespace infinite_sense

@@ -22,6 +22,7 @@ void TopicMonitor::Stop() {
   }
 }
 TopicMonitor::TopicMonitor() : context_(1), subscriber_(context_, ZMQ_SUB), should_run_(false) {
+
   try {
     subscriber_.connect(infinite_sense::Messenger::GetInstance().GetPubEndpoint());
     subscriber_.set(zmq::sockopt::subscribe, "");
