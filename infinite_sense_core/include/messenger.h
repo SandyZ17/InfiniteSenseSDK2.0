@@ -20,12 +20,14 @@ class Messenger {
   void Pub(const std::string& topic, const std::string& metadata);
   void PubStruct(const std::string& topic, const void* data, size_t size);
   [[noreturn]] void WaitAsk();
+
  private:
   Messenger();
   ~Messenger();
   zmq::context_t context_{};
   zmq::socket_t publisher_{};
   std::string endpoint_{};
+
  private:
   zmq::socket_t asker_{};
   std::thread ask_thread_;
