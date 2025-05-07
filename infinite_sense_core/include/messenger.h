@@ -25,6 +25,7 @@ class Messenger {
  private:
   Messenger();
   ~Messenger();
+  void CleanUp();
   zmq::context_t context_{};
   zmq::socket_t publisher_{},subscriber_{};
   std::string endpoint_{};
