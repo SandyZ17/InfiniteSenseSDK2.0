@@ -24,7 +24,7 @@ void TopicMonitor::Stop() {
 TopicMonitor::TopicMonitor() : context_(1), subscriber_(context_, ZMQ_SUB), should_run_(false) {
 
   try {
-    subscriber_.connect(infinite_sense::Messenger::GetInstance().GetPubEndpoint());
+    subscriber_.connect("tcp://127.0.0.1:4565");
     subscriber_.set(zmq::sockopt::subscribe, "");
   } catch (const zmq::error_t &e) {
     LOG(ERROR) << "[TopicMonitor] Initialization failed: " << e.what();

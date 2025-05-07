@@ -2,6 +2,7 @@
 #include "log.h"
 namespace infinite_sense {
 Messenger::Messenger() {
+  endpoint_ = "tcp://*:4565";
   publisher_.close();
   context_.close();
   context_ = zmq::context_t(1);
@@ -9,8 +10,9 @@ Messenger::Messenger() {
   publisher_.set(zmq::sockopt::linger, 0);
   publisher_.set(zmq::sockopt::rcvtimeo, 1000);
   try {
-    publisher_.bind("tcp://*:0");
-    endpoint_ = publisher_.get(zmq::sockopt::last_endpoint);
+    publisher_.bind(endpoint_);
+    // publisher_.bind("tcp://*:0");
+    // endpoint_ = publisher_.get(zmq::sockopt::last_endpoint);
     LOG(INFO) << "Publisher: " << endpoint_;
   } catch (const zmq::error_t &e) {
     LOG(ERROR) << "Failed to bind ZMQ publisher: " << e.what();
@@ -18,9 +20,9 @@ Messenger::Messenger() {
     publisher_.close();
   }
   asker_ = zmq::socket_t(context_, zmq::socket_type::rep);
-  asker_.bind("tcp://*:4565");
+  asker_.bind("tcp://*:4564");
   ask_thread_ = std::thread([this] { WaitAsk(); });
-}
+};
 Messenger::~Messenger() {
   publisher_.close();
   while (ask_thread_.joinable()) {
