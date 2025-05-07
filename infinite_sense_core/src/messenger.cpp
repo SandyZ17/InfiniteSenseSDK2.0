@@ -1,6 +1,5 @@
 #include "messenger.h"
-
-#include <log.h>
+#include "log.h"
 namespace infinite_sense {
 Messenger::Messenger() {
   publisher_.close();

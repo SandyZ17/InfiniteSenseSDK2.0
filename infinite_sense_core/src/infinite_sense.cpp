@@ -3,7 +3,6 @@
 #include "trigger.h"
 #include "net.h"
 #include "usb.h"
-#include "../../example/GigeCam/mv_cam.h"
 #include "messenger.h"
 #include "log.h"
 

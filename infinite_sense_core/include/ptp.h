@@ -1,6 +1,6 @@
 #pragma once
-#include <json.hpp>
 #include "usb.h"
+#include <json.hpp>
 #include <practical_socket.h>
 namespace infinite_sense {
 class Ptp {

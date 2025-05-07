@@ -1,6 +1,6 @@
 #include "infinite_sense.h"
 #include "ptp.h"
-#include "../include/data.h"
+#include "data.h"
 #include "net.h"
 namespace infinite_sense {
 NetManager::NetManager(std::string target_ip, const unsigned short port)

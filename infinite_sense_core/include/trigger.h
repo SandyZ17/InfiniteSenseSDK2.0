@@ -1,9 +1,9 @@
 #pragma once
 
 #include <mutex>
-#include <infinite_sense.h>
 #include <map>
 
+#include "infinite_sense.h"
 namespace infinite_sense {
 
 /**

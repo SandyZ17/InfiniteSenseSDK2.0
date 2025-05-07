@@ -1,5 +1,5 @@
 #include "ptp.h"
-#include <usb.h>
+#include "usb.h"
 #include <thread>
 namespace infinite_sense {
 void Ptp::SetUsbPtr(const std::shared_ptr<serial::Serial> &serial_ptr) { serial_ptr_ = serial_ptr; }

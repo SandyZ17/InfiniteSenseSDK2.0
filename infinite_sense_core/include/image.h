@@ -1,7 +1,5 @@
 #pragma once
-#include <cstdlib>
 #include <cstdint>
-#include <cstddef>
 namespace infinite_sense {
 #if defined(HAS_OPENCV) || defined(HAS_OPENCV3)
 #include <opencv2/core/core.hpp>

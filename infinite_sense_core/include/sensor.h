@@ -2,7 +2,6 @@
 #include <thread>
 #include <vector>
 #include "messenger.h"
-#include "infinite_sense.h"
 namespace infinite_sense {
 class Sensor{
 public:
