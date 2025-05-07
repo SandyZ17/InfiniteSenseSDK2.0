@@ -57,10 +57,4 @@ void Synchronizer::Stop() const {
   LOG(INFO) << "Synchronizer stopped";
 }
 
-void Synchronizer::PrintSummary() {
-  TopicMonitor::GetInstance().Start();
-  std::this_thread::sleep_for(std::chrono::milliseconds{1001});
-  TopicMonitor::GetInstance().Stop();
-  LOG(INFO) << TopicMonitor::GetInstance();
-}
 }  // namespace infinite_sense

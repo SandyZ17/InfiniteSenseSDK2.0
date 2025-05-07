@@ -75,11 +75,6 @@ class Synchronizer {
    */
   static bool GetLastTriggerTime(TriggerDevice dev, uint64_t time);
 
-  /**
-   * @brief 打印当前系统的配置与状态摘要信息。
-   */
-  static void PrintSummary();
-
  private:
   /// 网络地址
   std::string net_ip_;
