@@ -29,59 +29,24 @@ add_library(${PROJECT_NAME} SHARED
   src/messenger.cpp
   src/ptp.cpp
 )
-# 检测平台并设置相关变量
-if (CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
-  set(PLATFORM_DIR "arm")
-  set(MVCAM_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/mvcam/lib/aarch64)
-elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "amd64")
-  set(PLATFORM_DIR "x86")
-  set(MVCAM_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/mvcam/lib/x86/64)
-else ()
-  message(STATUS "Unknown Architecture")
-  set(PLATFORM_DIR "Unknown")
-endif ()
-message(STATUS "Find MVCAM_LIB_DIR : ${MVCAM_LIB_DIR}")
-# 设置目标链接目录
 target_link_directories(${PROJECT_NAME} PUBLIC
-    BEFORE ${MVCAM_LIB_DIR}
     ${CMAKE_INSTALL_RPATH}
     ${ZeroMQ_INCLUDE_DIRS}
 )
 
-# 链接库
 target_link_libraries(${PROJECT_NAME} PUBLIC
     ${ZeroMQ_LIBRARIES}
-    MvCameraControl
     serial
     udp
 )
 
-# 包含目录
 target_include_directories(${PROJECT_NAME} PUBLIC
     include
-    third_party/mvcam/include
 )
-# 设置目标的 RPATH
 set_target_properties(${PROJECT_NAME} PROPERTIES
     INSTALL_RPATH "$ORIGIN"
 )
 
-# 如果是构建的动态库，也可以设置构建时的 RPATH（即在开发过程中）
 set_target_properties(${PROJECT_NAME} PROPERTIES
     BUILD_RPATH "$ORIGIN"
 )
-
-# 安装库文件和头文件到平台特定目录
-# 安装目标库
-install(TARGETS ${PROJECT_NAME} serial udp
-    DESTINATION ${PROJECT_INSTALL_DIR}/${PLATFORM_DIR}/lib)
-
-# 安装头文件目录
-install(DIRECTORY include/
-    DESTINATION ${PROJECT_INSTALL_DIR}/${PLATFORM_DIR}/include)
-
-# 安装 MVCAM 库文件
-if (MVCAM_LIB_DIR)
-  install(DIRECTORY ${MVCAM_LIB_DIR}/
-      DESTINATION ${PROJECT_INSTALL_DIR}/${PLATFORM_DIR}/lib)
-endif ()

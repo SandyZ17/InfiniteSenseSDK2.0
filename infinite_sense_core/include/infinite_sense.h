@@ -61,9 +61,9 @@ class Synchronizer {
   /**
    * @brief 使用工业相机，并配置其对应的触发设备。
    *
-   * @param params 可选参数：映射相机名称到 TriggerDevice 枚举。
+   * @param cam
    */
-  void UseMvCam(const std::map<std::string, TriggerDevice>& params = std::map<std::string, TriggerDevice>());
+  void UseCam(const std::shared_ptr<Cam> &cam);
 
   /**
    * @brief 获取指定设备最近一次的触发时间（静态方法）。

@@ -27,8 +27,8 @@ void Synchronizer::SetUsbLink(std::string serial_dev, const int serial_baud_rate
   serial_manager_ = std::make_shared<UsbManager>(serial_dev_, serial_baud_rate_);
   net_manager_ = nullptr;
 }
-void Synchronizer::UseMvCam(const std::map<string, TriggerDevice>& params) {
-  cam_manager_ = std::make_shared<CamManger>(params);
+void Synchronizer::UseCam(const std::shared_ptr<Cam> &cam) {
+  cam_manager_ = cam;
 }
 bool Synchronizer::GetLastTriggerTime(const TriggerDevice dev, uint64_t time) {
   return GET_LAST_TRIGGER_STATUS(dev,time);
