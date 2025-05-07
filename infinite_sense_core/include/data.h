@@ -9,7 +9,6 @@ inline void ProcessTriggerData(const nlohmann::json &data) {
   }
   const uint64_t time_stamp = data["t"];
   const uint16_t status = data["s"];
-  const uint64_t count = data["c"];
   SET_LAST_TRIGGER_STATUS(time_stamp, status);
 };
 
@@ -21,7 +20,6 @@ inline void ProcessIMUData(const nlohmann::json &data) {
   const uint64_t time_stamp = data["t"];
   const uint64_t count = data["c"];
   imu.time_stamp_us = time_stamp;
-  // std::cout << imu.time_stamp_us << std::endl;
   imu.a[0] = data["d"][0];
   imu.a[1] = data["d"][1];
   imu.a[2] = data["d"][2];
