@@ -1,10 +1,10 @@
 #pragma once
 #include "infinite_sense.h"
 namespace infinite_sense {
-class CamManger final : public Cam {
+class MvCam final : public Cam {
  public:
-  explicit CamManger(const std::map<std::string, TriggerDevice>& params) : params_(params) {}
-  ~CamManger() override;
+  explicit MvCam(const std::map<std::string, TriggerDevice>& params) : params_(params) {}
+  ~MvCam() override;
 
   bool Initialization() override;
   void Stop() override;

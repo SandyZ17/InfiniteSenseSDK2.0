@@ -73,9 +73,9 @@ bool PrintDeviceInfo(const MV_CC_DEVICE_INFO *info) {
   return true;
 }
 
-CamManger::~CamManger() { Stop(); }
+MvCam::~MvCam() { Stop(); }
 
-bool CamManger::Initialization() {
+bool MvCam::Initialization() {
   int n_ret = MV_OK;
   MV_CC_DEVICE_INFO_LIST st_device_list{};
   memset(&st_device_list, 0, sizeof(MV_CC_DEVICE_INFO_LIST));
@@ -148,7 +148,7 @@ bool CamManger::Initialization() {
     return false;
   }
 }
-void CamManger::Restart() {
+void MvCam::Restart() {
   Stop();
   std::this_thread::sleep_for(std::chrono::milliseconds{500});
   if (!Initialization()) {
@@ -159,7 +159,7 @@ void CamManger::Restart() {
   }
 }
 
-void CamManger::Stop() {
+void MvCam::Stop() {
   Disable();
   std::this_thread::sleep_for(std::chrono::milliseconds{500});
   for (auto &cam_thread : cam_threads_) {
@@ -188,7 +188,7 @@ void CamManger::Stop() {
     LOG(INFO) << "Exit  " << i << "  cam ";
   }
 }
-void CamManger::Receive(void *handle, const std::string &name)  {
+void MvCam::Receive(void *handle, const std::string &name)  {
   unsigned int last_count = 0;
   MV_FRAME_OUT st_out_frame;
   CamData cam_data;
@@ -257,7 +257,7 @@ void CamManger::Receive(void *handle, const std::string &name)  {
     std::this_thread::sleep_for(std::chrono::milliseconds{2});
   }
 }
-void CamManger::Start() {
+void MvCam::Start() {
   for (const auto &handle : handles_) {
     int n_ret = MV_OK;
     MVCC_STRINGVALUE pst_value;
@@ -272,7 +272,7 @@ void CamManger::Start() {
       name = "cam_" + std::to_string(cam_index++);
       LOG(WARNING) << "Camera name is empty,create name " << name;
     }
-    cam_threads_.emplace_back(&CamManger::Receive, this, handle, name);
+    cam_threads_.emplace_back(&MvCam::Receive, this, handle, name);
     LOG(INFO) << "Camera name is " << name << " start";
   }
 }
