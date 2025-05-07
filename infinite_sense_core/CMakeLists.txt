@@ -28,6 +28,7 @@ add_library(${PROJECT_NAME} SHARED
   src/net.cpp
   src/messenger.cpp
   src/ptp.cpp
+  src/sensor.cpp
 )
 target_link_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_INSTALL_RPATH}

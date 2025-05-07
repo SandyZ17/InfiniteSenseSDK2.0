@@ -1,5 +1,4 @@
 #include "trigger.h"
-#include "infinite_sense.h"
 
 namespace infinite_sense {
 

@@ -148,27 +148,17 @@ bool MvCam::Initialization() {
     return false;
   }
 }
-void MvCam::Restart() {
-  Stop();
-  std::this_thread::sleep_for(std::chrono::milliseconds{500});
-  if (!Initialization()) {
-    LOG(INFO) << "Camera initialization failed after restart!";
-  } else {
-    Start();
-    LOG(INFO) << "Cameras successfully restarted!";
-  }
-}
 
 void MvCam::Stop() {
   Disable();
   std::this_thread::sleep_for(std::chrono::milliseconds{500});
-  for (auto &cam_thread : cam_threads_) {
+  for (auto &cam_thread : cam_threads) {
     while (cam_thread.joinable()) {
       cam_thread.join();
     }
   }
-  cam_threads_.clear();
-  cam_threads_.shrink_to_fit();
+  cam_threads.clear();
+  cam_threads.shrink_to_fit();
   for (size_t i = 0; i < handles_.size(); ++i) {
     int n_ret = MV_OK;
     n_ret = MV_CC_StopGrabbing(handles_[i]);
@@ -193,7 +183,7 @@ void MvCam::Receive(void *handle, const std::string &name)  {
   MV_FRAME_OUT st_out_frame;
   CamData cam_data;
   Messenger &messenger = Messenger::GetInstance();
-  while (is_running_) {
+  while (is_running) {
     memset(&st_out_frame, 0, sizeof(MV_FRAME_OUT));
     int n_ret = MV_CC_GetImageBuffer(handle, &st_out_frame, 10);
     if (n_ret == MV_OK) {
@@ -203,11 +193,11 @@ void MvCam::Receive(void *handle, const std::string &name)  {
         LOG(ERROR) << "Get ExposureTime fail! n_ret [0x" << std::hex << n_ret << "]";
       }
       // 这里的time_stamp_us是相机触发时间，需要加上曝光时间的一半，以获得相机拍摄的时间
-      if (params_.find(name) == params_.end()) {
+      if (params.find(name) == params.end()) {
         LOG(ERROR) << "cam " << name << " not found!";
       }
       else {
-        if (uint64_t time; GET_LAST_TRIGGER_STATUS(params_[name], time)) {
+        if (uint64_t time; GET_LAST_TRIGGER_STATUS(params[name], time)) {
           cam_data.time_stamp_us = time + static_cast<uint64_t>(expose_time.fCurValue / 2.);
         }
         else {
@@ -272,7 +262,7 @@ void MvCam::Start() {
       name = "cam_" + std::to_string(cam_index++);
       LOG(WARNING) << "Camera name is empty,create name " << name;
     }
-    cam_threads_.emplace_back(&MvCam::Receive, this, handle, name);
+    cam_threads.emplace_back(&MvCam::Receive, this, handle, name);
     LOG(INFO) << "Camera name is " << name << " start";
   }
 }

@@ -3,7 +3,6 @@
 namespace infinite_sense {
 class MvCam final : public Sensor {
  public:
-  explicit MvCam(const std::map<std::string, TriggerDevice>& params) : params_(params) {}
   ~MvCam() override;
 
   bool Initialization() override;
@@ -12,10 +11,7 @@ class MvCam final : public Sensor {
 
  private:
   void Receive(void* handle, const std::string&) override;
-  bool is_running_{false};
   std::vector<int> rets_;
   std::vector<void*> handles_;
-  std::vector<std::thread> cam_threads_;
-  std::map<std::string, TriggerDevice> params_;
 };
 }  // namespace infinite_sense

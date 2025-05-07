@@ -11,10 +11,4 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 
 add_subdirectory(infinite_sense_core)
-
-add_executable(${PROJECT_NAME}_zmq_node
-        example/ZMQ/main.cpp
-)
-target_link_libraries(${PROJECT_NAME}_zmq_node PRIVATE
-        infinite_sense_core
-)
+add_subdirectory(example)

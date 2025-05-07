@@ -2,14 +2,13 @@
 #include "mv_cam.h"
 using namespace infinite_sense;
 int main() {
-
   // 1.创建同步器
   Synchronizer synchronizer;
   synchronizer.SetUsbLink("/dev/ttyACM0", 460800);
   // 2.配置同步接口
-  std::map<std::string, TriggerDevice> params;
-  params["camera_1"] = CAM_1;
-  const auto mv_cam = std::make_shared<MvCam>(params);
+  std::map<std::string, TriggerDevice> params = {{"camera_1", CAM_1}};
+  auto mv_cam = std::make_shared<MvCam>();
+  mv_cam->SetParams(params);
   synchronizer.UseCam(mv_cam);
 
   // 3.开启同步
