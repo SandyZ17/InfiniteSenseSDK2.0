@@ -7,9 +7,9 @@
 namespace infinite_sense {
 
 namespace {
-constexpr char FUNC_NAME[] = "f";
-constexpr char FUNC_TYPE_A[] = "a";
-constexpr char FUNC_TYPE_B[] = "b";
+constexpr char func_name[] = "f";
+constexpr char func_type_a[] = "a";
+constexpr char func_type_b[] = "b";
 }  // namespace
 
 void Ptp::SetUsbPtr(const std::shared_ptr<serial::Serial>& serial_ptr) {
@@ -25,11 +25,11 @@ void Ptp::SetNetPtr(const std::shared_ptr<UDPSocket>& net_ptr, const std::string
 
 void Ptp::ReceivePtpData(const nlohmann::json& data) {
   try {
-    const std::string func = data.at(FUNC_NAME);
+    const std::string func = data.at(func_name);
 
-    if (func == FUNC_TYPE_A) {
+    if (func == func_type_a) {
       HandleTimeSyncRequest(data);
-    } else if (func == FUNC_TYPE_B) {
+    } else if (func == func_type_b) {
       HandleTimeSyncResponse(data);
     }
   } catch (const nlohmann::json::exception& e) {
@@ -39,8 +39,8 @@ void Ptp::ReceivePtpData(const nlohmann::json& data) {
 
 void Ptp::HandleTimeSyncRequest(const nlohmann::json& data) {
   try {
-    time_t1_ = data.at(FUNC_TYPE_A);
-    time_t2_ = data.at(FUNC_TYPE_B);
+    time_t1_ = data.at(func_type_a);
+    time_t2_ = data.at(func_type_b);
     updated_t1_t2_ = true;
   } catch (const nlohmann::json::exception& e) {
     LOG(ERROR) << "Invalid 'a' message format: " << e.what();
@@ -49,7 +49,7 @@ void Ptp::HandleTimeSyncRequest(const nlohmann::json& data) {
 
 void Ptp::HandleTimeSyncResponse(const nlohmann::json& data) {
   try {
-    const uint64_t t3 = data.at(FUNC_TYPE_A);
+    const uint64_t t3 = data.at(func_type_a);
     const uint64_t t4 = GetCurrentTimeUs();
 
     if (updated_t1_t2_) {
@@ -57,9 +57,9 @@ void Ptp::HandleTimeSyncResponse(const nlohmann::json& data) {
       const int64_t offset = static_cast<int64_t>(time_t2_ - time_t1_ - t4 + t3) / 2;
 
       nlohmann::json response = {
-          {FUNC_NAME, FUNC_TYPE_B},
-          {FUNC_TYPE_A, delay},
-          {FUNC_TYPE_B, offset},
+          {func_name, func_type_b},
+          {func_type_a, delay},
+          {func_type_b, offset},
       };
 
       SendJson(response);
@@ -74,8 +74,8 @@ void Ptp::SendPtpData() const {
   const uint64_t mark = GetCurrentTimeUs();
 
   nlohmann::json data = {
-      {FUNC_NAME, FUNC_TYPE_A},
-      {FUNC_TYPE_A, mark},
+      {func_name, func_type_a},
+      {func_type_a, mark},
   };
 
   SendJson(data);
