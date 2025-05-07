@@ -5,11 +5,12 @@
 namespace infinite_sense {
 class Ptp {
  public:
+
   Ptp() = default;
-  void ReceivePtpData(const nlohmann::json &data);
+  void ReceivePtpData(const nlohmann::json &);
   void SendPtpData() const;
-  void SetUsbPtr(const std::shared_ptr<serial::Serial> &serial_ptr);
-  void SetNetPtr(const std::shared_ptr<UDPSocket> &net_ptr, const std::string &target_ip, unsigned short port);
+  void SetUsbPtr(const std::shared_ptr<serial::Serial> &);
+  void SetNetPtr(const std::shared_ptr<UDPSocket> &, const std::string &, unsigned short);
 
  private:
   std::shared_ptr<serial::Serial> serial_ptr_{nullptr};

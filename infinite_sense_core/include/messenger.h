@@ -16,9 +16,9 @@ class Messenger {
   Messenger(const Messenger&) = delete;
   Messenger(const Messenger&&) = delete;
   Messenger& operator=(const Messenger&) = delete;
-  std::string GetPubEndpoint() const;
   void Pub(const std::string& topic, const std::string& metadata);
   void PubStruct(const std::string& topic, const void* data, size_t size);
+  [[nodiscard]] std::string GetPubEndpoint() const;
   [[noreturn]] void WaitAsk();
 
  private:

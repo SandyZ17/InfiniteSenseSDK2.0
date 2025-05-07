@@ -21,7 +21,7 @@ class Sensor {
   void SetParams(const std::map<std::string, TriggerDevice> &params_in) { params = params_in; };
 
  private:
-  virtual void Receive(void *handle, const std::string &) = 0;
+  virtual void Receive(void *, const std::string &) = 0;
 
  protected:
   bool is_running{false};
