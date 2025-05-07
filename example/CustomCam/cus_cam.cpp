@@ -44,7 +44,7 @@ void CustomCam::Receive(void *handle, const std::string &name)  {
     }
 }
 void CustomCam::Start() {
-  std::string name = "cam";
+  std::string name = "cus_camera";
   cam_threads_.emplace_back(&CustomCam::Receive, this, nullptr, name);
 }
 }  // namespace infinite_sense
