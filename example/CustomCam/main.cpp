@@ -20,10 +20,8 @@ int main() {
   synchronizer.Start();
 
   // 4.接收数据
-  while (true) {
-    Messenger::GetInstance().SubStruct("imu_1", ImuCallback);
-    Messenger::GetInstance().SubStruct("camera_1", ImageCallback);
-  }
+  Messenger::GetInstance().SubStruct("imu_1", ImuCallback);
+  Messenger::GetInstance().SubStruct("camera_1", ImageCallback);
   // 5.停止同步
   synchronizer.Stop();
   return 0;
