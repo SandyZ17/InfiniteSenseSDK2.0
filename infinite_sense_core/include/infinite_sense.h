@@ -8,7 +8,7 @@ namespace infinite_sense {
 
 class NetManager;
 class UsbManager;
-class CamManger;
+class Cam;
 class TriggerManger;
 class Messenger;
 /**
