@@ -3,7 +3,7 @@
 namespace infinite_sense {
 
  CustomCam::~CustomCam() {
-
+  Stop();
  }
 
 bool CustomCam::Initialization() {
