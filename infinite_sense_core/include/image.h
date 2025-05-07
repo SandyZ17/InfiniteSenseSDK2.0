@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 #include <cstdint>
 namespace infinite_sense {
 #if defined(HAS_OPENCV) || defined(HAS_OPENCV3)
