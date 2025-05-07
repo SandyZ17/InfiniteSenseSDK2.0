@@ -23,7 +23,7 @@ void CustomCam::Stop() {
 }
 void CustomCam::Receive(void *handle, const std::string &name)  {
   while (is_running_) {
-      // 这里的time_stamp_us是相机触发时间，需要加上曝光时间的一半，以获得相机拍摄的时间
+      CamData cam_data;
       if (params_.find(name) == params_.end()) {
         LOG(ERROR) << "cam " << name << " not found!";
       }
