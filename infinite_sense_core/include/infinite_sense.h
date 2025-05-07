@@ -2,13 +2,13 @@
 #include "log.h"
 #include "config.h"
 #include "messenger.h"
-#include "cam.h"
+#include "sensor.h"
 #include "trigger.h"
 namespace infinite_sense {
 
 class NetManager;
 class UsbManager;
-class Cam;
+class Sensor;
 class TriggerManger;
 class Messenger;
 /**
@@ -63,7 +63,7 @@ class Synchronizer {
    *
    * @param cam
    */
-  void UseCam(const std::shared_ptr<Cam> &cam);
+  void UseCam(const std::shared_ptr<Sensor> &cam);
 
   /**
    * @brief 获取指定设备最近一次的触发时间（静态方法）。
@@ -100,7 +100,7 @@ class Synchronizer {
   std::shared_ptr<UsbManager> serial_manager_{nullptr};
 
   /// 相机管理器
-  std::shared_ptr<Cam> cam_manager_{nullptr};
+  std::shared_ptr<Sensor> cam_manager_{nullptr};
 };
 
 }  // namespace infinite_sense

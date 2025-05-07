@@ -4,14 +4,14 @@
 #include "messenger.h"
 #include "infinite_sense.h"
 namespace infinite_sense {
-class Cam{
+class Sensor{
 public:
-  Cam();
-  explicit Cam(const std::map<std::string, TriggerDevice>& params) : params_(params) {}
-  virtual ~Cam();
+  Sensor();
+  explicit Sensor(const std::map<std::string, TriggerDevice>& params) : params_(params) {}
+  virtual ~Sensor();
 
-  Cam(const Cam&) = delete;
-  Cam& operator=(const Cam&) = delete;
+  Sensor(const Sensor&) = delete;
+  Sensor& operator=(const Sensor&) = delete;
 
   virtual bool Initialization();
   virtual void Stop();

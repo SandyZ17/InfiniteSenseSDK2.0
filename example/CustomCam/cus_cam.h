@@ -1,7 +1,7 @@
 #pragma once
 #include "infinite_sense.h"
 namespace infinite_sense {
-class CustomCam final : public Cam {
+class CustomCam final : public Sensor {
  public:
   explicit CustomCam(const std::map<std::string, TriggerDevice>& params) : params_(params) {}
   ~CustomCam() override;
