@@ -19,17 +19,13 @@ class Messenger {
   void Pub(const std::string& topic, const std::string& metadata);
   void PubStruct(const std::string& topic, const void* data, size_t size);
   [[nodiscard]] std::string GetPubEndpoint() const;
-  [[noreturn]] void WaitAsk();
-
+  void Sub(const std::string& topic, const std::function<void(const std::string&)>& callback);
+  void SubStruct(const std::string& topic, const std::function<void(const void*, size_t)>& callback);
  private:
   Messenger();
   ~Messenger();
   zmq::context_t context_{};
-  zmq::socket_t publisher_{};
+  zmq::socket_t publisher_{},subscriber_{};
   std::string endpoint_{};
-
- private:
-  zmq::socket_t asker_{};
-  std::thread ask_thread_;
 };
 }  // namespace infinite_sense

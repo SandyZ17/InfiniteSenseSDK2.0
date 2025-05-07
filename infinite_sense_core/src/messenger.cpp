@@ -4,30 +4,29 @@ namespace infinite_sense {
 Messenger::Messenger() {
   endpoint_ = "tcp://*:4565";
   publisher_.close();
+  subscriber_.close();
   context_.close();
   context_ = zmq::context_t(1);
   publisher_ = zmq::socket_t(context_, ZMQ_PUB);
+  subscriber_ = zmq::socket_t(context_, ZMQ_SUB);
   publisher_.set(zmq::sockopt::linger, 0);
   publisher_.set(zmq::sockopt::rcvtimeo, 1000);
   try {
+    subscriber_.connect(endpoint_);
     publisher_.bind(endpoint_);
     // publisher_.bind("tcp://*:0");
     // endpoint_ = publisher_.get(zmq::sockopt::last_endpoint);
-    LOG(INFO) << "Publisher: " << endpoint_;
+    LOG(INFO) << "New ZMQ endpoint: " << endpoint_;
   } catch (const zmq::error_t &e) {
-    LOG(ERROR) << "Failed to bind ZMQ publisher: " << e.what();
+    LOG(ERROR) << "Failed to bind ZMQ endpoint: " << e.what();
     context_.close();
     publisher_.close();
+    subscriber_.close();
   }
-  asker_ = zmq::socket_t(context_, zmq::socket_type::rep);
-  asker_.bind("tcp://*:4564");
-  ask_thread_ = std::thread([this] { WaitAsk(); });
 };
 Messenger::~Messenger() {
   publisher_.close();
-  while (ask_thread_.joinable()) {
-    ask_thread_.join();
-  }
+  subscriber_.close();
 }
 void Messenger::Pub(const std::string &topic, const std::string &metadata) {
   try {
@@ -56,19 +55,42 @@ void Messenger::PubStruct(const std::string &topic, const void *data, const size
   }
 }
 std::string Messenger::GetPubEndpoint() const { return endpoint_; }
-
-[[noreturn]] void Messenger::WaitAsk() {
-  while (true) {
-    zmq::message_t request;
-    asker_.recv(request, zmq::recv_flags::none);
-    std::string received_msg(static_cast<char *>(request.data()), request.size());
-    if (received_msg == "ask_endpoint") {
-      std::string reply_msg = GetPubEndpoint();
-      zmq::message_t reply(reply_msg.size());
-      memcpy(reply.data(), reply_msg.data(), reply_msg.size());
-      asker_.send(reply, zmq::send_flags::none);
+void Messenger::Sub(const std::string &topic, const std::function<void(const std::string &)>& callback) {
+  try {
+    subscriber_.set(zmq::sockopt::subscribe, topic);
+    while (true) {
+      zmq::message_t topic_msg;
+      zmq::message_t data_msg;
+      subscriber_.recv(topic_msg, zmq::recv_flags::none);
+      std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
+      if (received_topic != topic) {
+        continue;
+      }
+      subscriber_.recv(data_msg, zmq::recv_flags::none);
+      std::string data(static_cast<char*>(data_msg.data()), data_msg.size());
+      callback(data);
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  } catch (const zmq::error_t &e) {
+    LOG(ERROR) << "Exception in Sub: " << e.what();
   }
 }
+void Messenger::SubStruct(const std::string &topic, const std::function<void(const void *, size_t)>& callback) {
+  try {
+    subscriber_.set(zmq::sockopt::subscribe, topic);
+    while (true) {
+      zmq::message_t topic_msg;
+      zmq::message_t data_msg;
+      subscriber_.recv(topic_msg, zmq::recv_flags::none);
+      std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
+      if (received_topic != topic) {
+        continue;
+      }
+      subscriber_.recv(data_msg, zmq::recv_flags::none);
+      callback(data_msg.data(), data_msg.size());
+    }
+  } catch (const zmq::error_t &e) {
+    LOG(ERROR) << "Exception in SubStruct: " << e.what();
+  }
+}
+
 }  // namespace infinite_sense
