@@ -18,7 +18,6 @@ inline void ProcessIMUData(const nlohmann::json &data) {
   }
   ImuData imu{};
   const uint64_t time_stamp = data["t"];
-  const uint64_t count = data["c"];
   imu.time_stamp_us = time_stamp;
   imu.a[0] = data["d"][0];
   imu.a[1] = data["d"][1];
