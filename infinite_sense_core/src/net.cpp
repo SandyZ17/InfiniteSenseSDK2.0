@@ -56,7 +56,6 @@ void NetManager::Receive() const {
         if (json_data.empty()) {
           continue;
         }
-        // LOG(INFO) <<  json_data.dump();
         ptp_->ReceivePtpData(json_data);
         ProcessTriggerData(json_data);
         ProcessIMUData(json_data);

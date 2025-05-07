@@ -6,7 +6,6 @@ Messenger::Messenger() {
   context_.close();
   context_ = zmq::context_t(1);
   publisher_ = zmq::socket_t(context_, ZMQ_PUB);
-  // 关闭时不等待未发送消息
   publisher_.set(zmq::sockopt::linger, 0);
   publisher_.set(zmq::sockopt::rcvtimeo, 1000);
   try {
@@ -48,14 +47,11 @@ void Messenger::PubStruct(const std::string &topic, const void *data, const size
 }
 std::string Messenger::GetPubEndpoint() const { return endpoint_; }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 std::unordered_set<std::string> TopicMonitor::GetTopics() const {
   std::lock_guard lock(topics_mutex_);
-  return topics_;  // 返回副本保证线程安全
+  return topics_;
 }
-// 启动监控线程
 void TopicMonitor::Start() {
   if (monitor_thread_.joinable()) {
     return;
@@ -64,7 +60,6 @@ void TopicMonitor::Start() {
   monitor_thread_ = std::thread(&TopicMonitor::MonitorLoop, this);
 }
 
-// 停止监控
 void TopicMonitor::Stop() {
   if (!should_run_.load()) {
     return;
@@ -92,7 +87,6 @@ TopicMonitor::~TopicMonitor() {
     LOG(ERROR) << "[TopicMonitor] Cleanup error: " << e.what();
   }
 }
-// 监控线程主循环
 void TopicMonitor::MonitorLoop() {
   zmq::message_t msg;
 
@@ -104,7 +98,6 @@ void TopicMonitor::MonitorLoop() {
           std::lock_guard lock(topics_mutex_);
           topic_frequencies_[topic]++;
         }
-        // 如果是多部分消息，跳过数据部分
         if (subscriber_.get(zmq::sockopt::rcvmore)) {
           zmq::message_t dummy;
           subscriber_.recv(dummy);

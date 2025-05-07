@@ -23,7 +23,6 @@ void Ptp::ReceivePtpData(const nlohmann::json &data) {
         std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch())
             .count();
     if (updated_t1_t2_) {
-      // 发送时间偏差到从设备
       int64_t delay = static_cast<int64_t>(t4 - t3 + time_t2_ - time_t1_) / 2;
       int64_t offset = static_cast<int64_t>(time_t2_ - time_t1_ - t4 + t3) / 2;
       const nlohmann::json jsons = {
@@ -39,7 +38,6 @@ void Ptp::ReceivePtpData(const nlohmann::json &data) {
         serial_ptr_->write(reinterpret_cast<uint8_t *>(out.data()), out.size());
         updated_t1_t2_ = false;
       }
-      // std::cout << "delay: " << delay << " offset: " << offset << std::endl;
     }
   }
 }
