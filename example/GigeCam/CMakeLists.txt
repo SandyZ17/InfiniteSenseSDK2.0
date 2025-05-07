@@ -2,15 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(gige_cam VERSION 1.0)
 
-set(CMAKE_CXX_STANDARD 17)
-
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-    set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -O3  -Wall")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3  -Wall")
-endif ()
-
-
 # 检测平台并设置相关变量
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
     set(PLATFORM_DIR "arm")

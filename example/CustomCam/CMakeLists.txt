@@ -2,15 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(custom_cam VERSION 1.0)
 
-set(CMAKE_CXX_STANDARD 17)
-
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-    set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -O3  -Wall")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3  -Wall")
-endif ()
-
-
 add_executable(${PROJECT_NAME}
         main.cpp
         cus_cam.cpp
