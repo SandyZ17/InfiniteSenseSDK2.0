@@ -7,16 +7,16 @@ int main() {
   Synchronizer synchronizer;
 
   synchronizer.SetUsbLink("/dev/ttyACM0", 460800);
-
+  // 2.配置同步接口
   std::map<std::string, TriggerDevice> params;
   params["cus_camera"] = CAM_1;
   const auto cus_cam = std::make_shared<CustomCam>(params);
   synchronizer.UseCam(cus_cam);
 
-  // 2.开启同步
+  // 3.开启同步
   synchronizer.Start();
 
-  // 3.订阅数据
+  // 4.订阅数据
   Synchronizer::PrintSummary();
   zmq::context_t context(1);
   zmq::socket_t subscriber(context, zmq::socket_type::sub);
@@ -33,7 +33,7 @@ int main() {
       }
     }
   }
-  // 4.停止同步
+  // 5.停止同步
   synchronizer.Stop();
   return 0;
 }
