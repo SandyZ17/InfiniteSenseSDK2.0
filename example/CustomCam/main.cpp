@@ -6,19 +6,14 @@ int main() {
   Synchronizer synchronizer;
   synchronizer.SetUsbLink("/dev/ttyACM0", 460800);
   // 2.配置同步接口
-  std::map<std::string, TriggerDevice> params = {
-      {"camera_1", CAM_1},
-      {"camera_2", CAM_2},
-  };
   auto mv_cam = std::make_shared<CustomCam>();
-  mv_cam->SetParams(params);
+  mv_cam->SetParams({{"camera_1", CAM_1},{"camera_2", CAM_2},});
   synchronizer.UseCam(mv_cam);
 
   // 3.开启同步
   synchronizer.Start();
 
   // 4.接收数据
-  Synchronizer::PrintSummary();
   zmq::context_t context(1);
   zmq::socket_t subscriber(context, zmq::socket_type::sub);
   subscriber.connect("tcp://localhost:5555");
