@@ -12,7 +12,7 @@
 ## 第四代同步板拥有更加准确的同步信号
 
 <p align="center">
-<img style="width:50%;" alt="1秒钟触发" src="one_second.png">
+<img style="width:50%;" alt="1秒钟触发" src="../picture/one_second.png">
 
 <p align="center">
 <img  style="width:50%; alt="帧率对齐" src="align.png">

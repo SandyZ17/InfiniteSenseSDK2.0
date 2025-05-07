@@ -1,5 +1,5 @@
 <p align="center">
-<img  style="width:50%;"  alt="Logo" src="assets/main_logo.png">
+<img  style="width:50%;"  alt="Logo" src="assets/picture/main_logo.png">
 <br>
 <em>稳定 易用 精度</em>
 <br>
@@ -22,7 +22,7 @@
 📜 日志功能增强 – 记录更全面，调试更高效。   
 🌐 多平台灵活部署 – (ZeroMQ)支持嵌入式/桌面/云端多场景部署。  
 🔗 支持多相机 📷、雷达⦿ 、IMU 🧭 与单 GPS 🛰 的混合信号协同管理。  
-🔄 [支持多同步板](./assets/board_introduction.md) -V3/V4/MINI。  
+🔄 [支持多同步板](assets/doc/board_introduction.md) -V3/V4/MINI。  
 🛡️ 安全可靠 – 更加安全的电源与接线🚫。
 
 立即升级，体验更高效、更友好的 SDK！🚀
@@ -53,9 +53,9 @@ cd InfiniteSenseSDK2.0
 mkdir build && cd build
 cmake..
 ```
-## [同步板配置](./assets/board_config.md)
-## [传感器接线](./assets/connection_config.md)
-## [Demo运行](./assets/run_demo.md)
-## [协议解析](./assets/data_info.md)
+## [同步板配置](assets/doc/board_config.md)
+## [传感器接线](assets/doc/connection_config.md)
+## [Demo运行](assets/doc/run_demo.md)
+## [协议解析](assets/doc/data_info.md)
 
 # 常见问题
