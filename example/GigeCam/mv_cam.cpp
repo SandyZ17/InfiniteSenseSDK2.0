@@ -1,4 +1,4 @@
-#include "mvcam.h"
+#include "mv_cam.h"
 #include "infinite_sense.h"
 #include "MvCameraControl.h"
 namespace infinite_sense {

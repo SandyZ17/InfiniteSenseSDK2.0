@@ -6,13 +6,9 @@ class CamManger final : public Cam {
   explicit CamManger(const std::map<std::string, TriggerDevice>& params) : params_(params) {}
   ~CamManger() override;
 
-  CamManger(const CamManger&) = delete;
-  CamManger& operator=(const CamManger&) = delete;
-
   bool Initialization() override;
   void Stop() override;
   void Start() override;
-  void Restart() override;
 
  private:
   void Receive(void* handle, const std::string&) override;
