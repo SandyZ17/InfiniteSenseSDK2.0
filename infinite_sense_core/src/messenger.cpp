@@ -53,46 +53,54 @@ void Messenger::PubStruct(const std::string& topic, const void* data, size_t siz
 std::string Messenger::GetPubEndpoint() const { return endpoint_; }
 
 void Messenger::Sub(const std::string& topic, const std::function<void(const std::string&)>& callback) {
-  try {
-    subscriber_.set(zmq::sockopt::subscribe, topic);
+  sub_threads_.emplace_back([=, this]() {
+    try {
+      zmq::socket_t subscriber(context_, zmq::socket_type::sub);
+      subscriber.connect(endpoint_);
+      subscriber.set(zmq::sockopt::subscribe, topic);
 
-    while (true) {
-      zmq::message_t topic_msg, data_msg;
-      if (!subscriber_.recv(topic_msg) || !subscriber_.recv(data_msg)) {
-        LOG(WARNING) << "Subscription receive failed.";
-        continue;
+      while (true) {
+        zmq::message_t topic_msg, data_msg;
+        if (!subscriber.recv(topic_msg) || !subscriber.recv(data_msg)) {
+          LOG(WARNING) << "Subscription receive failed for topic: " << topic;
+          continue;
+        }
+
+        std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
+        if (received_topic != topic) continue;
+
+        std::string data(static_cast<char*>(data_msg.data()), data_msg.size());
+        callback(data);
       }
-
-      std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
-      if (received_topic != topic) continue;
-
-      std::string data(static_cast<char*>(data_msg.data()), data_msg.size());
-      callback(data);
+    } catch (const zmq::error_t& e) {
+      LOG(ERROR) << "Exception in Sub thread for topic [" << topic << "]: " << e.what();
     }
-  } catch (const zmq::error_t& e) {
-    LOG(ERROR) << "Exception in Sub: " << e.what();
-  }
+  });
 }
 
 void Messenger::SubStruct(const std::string& topic, const std::function<void(const void*, size_t)>& callback) {
-  try {
-    subscriber_.set(zmq::sockopt::subscribe, topic);
+  sub_threads_.emplace_back([=, this]() {
+    try {
+      zmq::socket_t subscriber(context_, zmq::socket_type::sub);
+      subscriber.connect(endpoint_);
+      subscriber.set(zmq::sockopt::subscribe, topic);
 
-    while (true) {
-      zmq::message_t topic_msg, data_msg;
-      if (!subscriber_.recv(topic_msg) || !subscriber_.recv(data_msg)) {
-        LOG(WARNING) << "Subscription struct receive failed.";
-        continue;
+      while (true) {
+        zmq::message_t topic_msg, data_msg;
+        if (!subscriber.recv(topic_msg) || !subscriber.recv(data_msg)) {
+          LOG(WARNING) << "Subscription to topic [" << topic << "] failed.";
+          continue;
+        }
+
+        std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
+        if (received_topic != topic) continue;
+
+        callback(data_msg.data(), data_msg.size());
       }
-
-      std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
-      if (received_topic != topic) continue;
-
-      callback(data_msg.data(), data_msg.size());
+    } catch (const zmq::error_t& e) {
+      LOG(ERROR) << "Exception in SubStruct for topic [" << topic << "]: " << e.what();
     }
-  } catch (const zmq::error_t& e) {
-    LOG(ERROR) << "Exception in SubStruct: " << e.what();
-  }
+  });
 }
 
 }  // namespace infinite_sense

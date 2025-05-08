@@ -22,12 +22,14 @@ class Messenger {
   [[nodiscard]] std::string GetPubEndpoint() const;
   void Sub(const std::string& topic, const std::function<void(const std::string&)>& callback);
   void SubStruct(const std::string& topic, const std::function<void(const void*, size_t)>& callback);
+
  private:
   Messenger();
   ~Messenger();
   void CleanUp();
   zmq::context_t context_{};
-  zmq::socket_t publisher_{},subscriber_{};
+  zmq::socket_t publisher_{}, subscriber_{};
   std::string endpoint_{};
+  std::vector<std::thread> sub_threads_;
 };
 }  // namespace infinite_sense
