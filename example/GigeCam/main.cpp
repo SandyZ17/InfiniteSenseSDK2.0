@@ -1,11 +1,13 @@
 #include "infinite_sense.h"
 #include "mv_cam.h"
 using namespace infinite_sense;
-void ImuCallback(const void *msg,size_t) {
-
+void ImuCallback(const void* msg, size_t) {
+  const auto* imu_data = static_cast<const ImuData*>(msg);
+  // do something with imu_data
 }
-void ImageCallback(const void *msg,size_t) {
-
+void ImageCallback(const void* msg, size_t) {
+  const auto* cam_data = static_cast<const CamData*>(msg);
+  // do something with cam_data
 }
 int main() {
   // 1.创建同步器
