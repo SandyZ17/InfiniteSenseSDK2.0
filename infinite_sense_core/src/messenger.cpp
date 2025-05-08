@@ -27,6 +27,11 @@ void Messenger::CleanUp() {
     publisher_.close();
     subscriber_.close();
     context_.close();
+    for (auto& t : sub_threads_) {
+      if (t.joinable()) {
+        t.join();
+      }
+    }
   } catch (...) {
     // 忽略析构期异常
   }
@@ -55,7 +60,8 @@ std::string Messenger::GetPubEndpoint() const { return endpoint_; }
 void Messenger::Sub(const std::string& topic, const std::function<void(const std::string&)>& callback) {
   sub_threads_.emplace_back([=, this]() {
     try {
-      zmq::socket_t subscriber(context_, zmq::socket_type::sub);
+      zmq::context_t context = zmq::context_t(1);
+      zmq::socket_t subscriber(context, zmq::socket_type::sub);
       subscriber.connect(endpoint_);
       subscriber.set(zmq::sockopt::subscribe, topic);
 
@@ -81,7 +87,8 @@ void Messenger::Sub(const std::string& topic, const std::function<void(const std
 void Messenger::SubStruct(const std::string& topic, const std::function<void(const void*, size_t)>& callback) {
   sub_threads_.emplace_back([=, this]() {
     try {
-      zmq::socket_t subscriber(context_, zmq::socket_type::sub);
+      zmq::context_t context = zmq::context_t(1);
+      zmq::socket_t subscriber(context, zmq::socket_type::sub);
       subscriber.connect(endpoint_);
       subscriber.set(zmq::sockopt::subscribe, topic);
 
