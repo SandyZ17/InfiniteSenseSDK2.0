@@ -26,10 +26,8 @@ void Synchronizer::SetUsbLink(std::string serial_dev, const int serial_baud_rate
   serial_manager_ = std::make_shared<UsbManager>(serial_dev_, serial_baud_rate_);
   net_manager_ = nullptr;
 }
-void Synchronizer::UseCam(const std::shared_ptr<Sensor>& cam) { cam_manager_ = cam; }
-bool Synchronizer::GetLastTriggerTime(const TriggerDevice dev, uint64_t time) {
-  return GET_LAST_TRIGGER_STATUS(dev, time);
-}
+void Synchronizer::UseSensor(const std::shared_ptr<Sensor>& sensor) { sensor_manager_ = sensor; }
+
 void Synchronizer::Start() const {
   if (net_manager_) {
     net_manager_->Start();
@@ -37,10 +35,10 @@ void Synchronizer::Start() const {
   if (serial_manager_) {
     serial_manager_->Start();
   }
-  if (cam_manager_) {
+  if (sensor_manager_) {
     std::this_thread::sleep_for(std::chrono::milliseconds{2000});
-    cam_manager_->Initialization();
-    cam_manager_->Start();
+    sensor_manager_->Initialization();
+    sensor_manager_->Start();
   }
   LOG(INFO) << "Synchronizer started";
 }
@@ -51,8 +49,8 @@ void Synchronizer::Stop() const {
   if (serial_manager_) {
     serial_manager_->Stop();
   }
-  if (cam_manager_) {
-    cam_manager_->Stop();
+  if (sensor_manager_) {
+    sensor_manager_->Stop();
   }
   LOG(INFO) << "Synchronizer stopped";
 }

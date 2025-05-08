@@ -59,21 +59,11 @@ class Synchronizer {
   void SetNetLink(std::string net_dev, unsigned int port);
 
   /**
-   * @brief 使用工业相机，并配置其对应的触发设备。
+   * @brief 使用传感器，并配置其对应的触发设备。
    *
-   * @param cam
+   * @param sensor
    */
-  void UseCam(const std::shared_ptr<Sensor>& cam);
-
-  /**
-   * @brief 获取指定设备最近一次的触发时间（静态方法）。
-   *
-   * @param dev 查询的设备类型。
-   * @param time 返回对应的触发时间戳。
-   * @return true 如果查询成功（设备有触发记录）。
-   * @return false 如果设备无记录。
-   */
-  static bool GetLastTriggerTime(TriggerDevice dev, uint64_t time);
+  void UseSensor(const std::shared_ptr<Sensor>&);
 
  private:
   /// 网络地址
@@ -95,7 +85,7 @@ class Synchronizer {
   std::shared_ptr<UsbManager> serial_manager_{nullptr};
 
   /// 相机管理器
-  std::shared_ptr<Sensor> cam_manager_{nullptr};
+  std::shared_ptr<Sensor> sensor_manager_{nullptr};
 };
 
 }  // namespace infinite_sense

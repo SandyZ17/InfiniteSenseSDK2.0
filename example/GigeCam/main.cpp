@@ -15,7 +15,7 @@ int main() {
   // 2.配置同步接口
   auto mv_cam = std::make_shared<MvCam>();
   mv_cam->SetParams({{"camera_1", CAM_1}});
-  synchronizer.UseCam(mv_cam);
+  synchronizer.UseSensor(mv_cam);
 
   // 3.开启同步
   synchronizer.Start();
