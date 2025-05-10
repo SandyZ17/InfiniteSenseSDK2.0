@@ -10,15 +10,14 @@ inline void ProcessTriggerData(const nlohmann::json &data) {
   const uint64_t time_stamp = data["t"];
   const uint16_t status = data["s"];
   SET_LAST_TRIGGER_STATUS(time_stamp, status);
-};
+}
 
 inline void ProcessIMUData(const nlohmann::json &data) {
   if (data["f"] != "imu") {
     return;
   }
   ImuData imu{};
-  const uint64_t time_stamp = data["t"];
-  imu.time_stamp_us = time_stamp;
+  imu.time_stamp_us = data["t"];
   imu.a[0] = data["d"][0];
   imu.a[1] = data["d"][1];
   imu.a[2] = data["d"][2];
@@ -44,13 +43,13 @@ inline void ProcessGPSData(const nlohmann::json &data) {
   gps.gps_stamp_us_trigger = data["d"][3];
   gps.time_stamp_us = data["t"];
   Messenger::GetInstance().PubStruct("gps", &gps, sizeof(gps));
-};
+}
 
 inline void ProcessLOGData(const nlohmann::json &data) {
   if (data["f"] != "log") {
     return;
   }
   LOG(data["l"]) << data["msg"];
-};
+}
 
 }  // namespace infinite_sense

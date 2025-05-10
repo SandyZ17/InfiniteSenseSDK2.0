@@ -4,18 +4,18 @@
 #include "image.h"
 namespace infinite_sense {
 struct ImuData {
-  uint64_t time_stamp_us;
-  float temperature;
-  std::string name;
-  float a[3];
-  float g[3];
-  float q[4];
+  uint64_t time_stamp_us; // microseconds since start of recording
+  float temperature;      // temperature in Celsius
+  std::string name;       // imu name
+  float a[3];             // accelerometer
+  float g[3];             // gyroscope
+  float q[4];             // quaternion
 };
 
 struct CamData {
-  uint64_t time_stamp_us;
-  std::string name;
-  GMat image;
+  uint64_t time_stamp_us;   // microseconds since start of recording
+  std::string name;         // camera name
+  GMat image;               // image data
 };
 
 struct LaserData {

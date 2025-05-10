@@ -33,7 +33,7 @@ void Messenger::CleanUp() {
       }
     }
   } catch (...) {
-    // 忽略析构期异常
+    LOG(ERROR) << "Messenger clean up error";
   }
 }
 
@@ -73,8 +73,9 @@ void Messenger::Sub(const std::string& topic, const std::function<void(const std
         }
 
         std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
-        if (received_topic != topic) continue;
-
+        if (received_topic != topic) {
+          continue;
+        }
         std::string data(static_cast<char*>(data_msg.data()), data_msg.size());
         callback(data);
       }
@@ -100,8 +101,9 @@ void Messenger::SubStruct(const std::string& topic, const std::function<void(con
         }
 
         std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
-        if (received_topic != topic) continue;
-
+        if (received_topic != topic) {
+          continue;
+        }
         callback(data_msg.data(), data_msg.size());
       }
     } catch (const zmq::error_t& e) {
