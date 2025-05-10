@@ -73,6 +73,7 @@ void UsbManager::Receive() const {
       if (serial_ptr_->available()) {
         const std::string serial_recv = serial_ptr_->readline();
         if (serial_recv.empty()) {
+          LOG(WARNING) << "Received empty string.";
           continue;
         }
         auto json_data = nlohmann::json::parse(serial_recv, nullptr, false);

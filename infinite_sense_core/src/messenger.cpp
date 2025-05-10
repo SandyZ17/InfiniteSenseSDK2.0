@@ -6,11 +6,10 @@ namespace infinite_sense {
 Messenger::Messenger() {
   try {
     endpoint_ = "tcp://127.0.0.1:4565";
-    context_ = zmq::context_t(1);
+    context_ = zmq::context_t(10);
     publisher_ = zmq::socket_t(context_, zmq::socket_type::pub);
     subscriber_ = zmq::socket_t(context_, zmq::socket_type::sub);
-
-    publisher_.connect(endpoint_);
+    publisher_.bind(endpoint_);
     subscriber_.connect(endpoint_);
 
     LOG(INFO) << "Connected to ZMQ endpoint: " << endpoint_;
@@ -60,8 +59,7 @@ std::string Messenger::GetPubEndpoint() const { return endpoint_; }
 void Messenger::Sub(const std::string& topic, const std::function<void(const std::string&)>& callback) {
   sub_threads_.emplace_back([=, this]() {
     try {
-      zmq::context_t context = zmq::context_t(1);
-      zmq::socket_t subscriber(context, zmq::socket_type::sub);
+      zmq::socket_t subscriber(context_, zmq::socket_type::sub);
       subscriber.connect(endpoint_);
       subscriber.set(zmq::sockopt::subscribe, topic);
 
@@ -71,7 +69,6 @@ void Messenger::Sub(const std::string& topic, const std::function<void(const std
           LOG(WARNING) << "Subscription receive failed for topic: " << topic;
           continue;
         }
-
         std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
         if (received_topic != topic) {
           continue;
@@ -92,14 +89,12 @@ void Messenger::SubStruct(const std::string& topic, const std::function<void(con
       zmq::socket_t subscriber(context, zmq::socket_type::sub);
       subscriber.connect(endpoint_);
       subscriber.set(zmq::sockopt::subscribe, topic);
-
       while (true) {
         zmq::message_t topic_msg, data_msg;
         if (!subscriber.recv(topic_msg) || !subscriber.recv(data_msg)) {
           LOG(WARNING) << "Subscription to topic [" << topic << "] failed.";
           continue;
         }
-
         std::string received_topic(static_cast<char*>(topic_msg.data()), topic_msg.size());
         if (received_topic != topic) {
           continue;

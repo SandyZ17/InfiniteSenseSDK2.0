@@ -10,7 +10,7 @@ inline void ProcessTriggerData(const nlohmann::json &data) {
   const uint64_t time_stamp = data["t"];
   const uint16_t status = data["s"];
   SET_LAST_TRIGGER_STATUS(time_stamp, status);
-}
+};
 
 inline void ProcessIMUData(const nlohmann::json &data) {
   if (data["f"] != "imu") {
@@ -29,7 +29,7 @@ inline void ProcessIMUData(const nlohmann::json &data) {
   imu.q[1] = data["q"][1];
   imu.q[2] = data["q"][2];
   imu.q[3] = data["q"][3];
-  Messenger::GetInstance().PubStruct("imu1", &imu, sizeof(imu));
+  Messenger::GetInstance().PubStruct("imu_1", &imu, sizeof(imu));
 };
 
 inline void ProcessGPSData(const nlohmann::json &data) {
@@ -43,7 +43,7 @@ inline void ProcessGPSData(const nlohmann::json &data) {
   gps.gps_stamp_us_trigger = data["d"][3];
   gps.time_stamp_us = data["t"];
   Messenger::GetInstance().PubStruct("gps", &gps, sizeof(gps));
-}
+};
 
 inline void ProcessLOGData(const nlohmann::json &data) {
   if (data["f"] != "log") {
