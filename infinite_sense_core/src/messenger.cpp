@@ -55,8 +55,6 @@ void Messenger::PubStruct(const std::string& topic, const void* data, size_t siz
   }
 }
 
-std::string Messenger::GetPubEndpoint() const { return endpoint_; }
-
 void Messenger::Sub(const std::string& topic, const std::function<void(const std::string&)>& callback) {
   sub_threads_.emplace_back([=, this]() {
     try {

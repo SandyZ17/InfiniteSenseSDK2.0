@@ -19,7 +19,6 @@ class Messenger {
   Messenger& operator=(const Messenger&) = delete;
   void Pub(const std::string& topic, const std::string& metadata);
   void PubStruct(const std::string& topic, const void* data, size_t size);
-  [[nodiscard]] std::string GetPubEndpoint() const;
   void Sub(const std::string& topic, const std::function<void(const std::string&)>& callback);
   void SubStruct(const std::string& topic, const std::function<void(const void*, size_t)>& callback);
 
