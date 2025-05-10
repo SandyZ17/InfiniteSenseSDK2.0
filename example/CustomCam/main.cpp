@@ -3,11 +3,11 @@
 using namespace infinite_sense;
 void ImuCallback(const void* msg, size_t) {
   const auto* imu_data = static_cast<const ImuData*>(msg);
-  // do something with imu_data
+  // 处理IMU数据
 }
 void ImageCallback(const void* msg, size_t) {
   const auto* cam_data = static_cast<const CamData*>(msg);
-  // do something with cam_data
+  // 处理图像数据
 }
 int main() {
   // 1.创建同步器
