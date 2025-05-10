@@ -95,7 +95,6 @@ class TriggerManger {
   uint8_t status_{0};
   std::mutex lock_{};
   std::map<TriggerDevice, std::tuple<bool, uint64_t>> status_map_{};
-  std::map<TriggerDevice, std::string> device_topics_;
 };
 
 }  // namespace infinite_sense

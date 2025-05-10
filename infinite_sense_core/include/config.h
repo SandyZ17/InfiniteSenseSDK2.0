@@ -42,4 +42,14 @@ enum TriggerDevice {
   LASER = 6,  // laser pps
   GPS = 7,    // gps pps
 };
+//
+std::map<TriggerDevice, std::string> device_topics{
+    {IMU_1, "imu_1_trigger"},
+    {IMU_2, "imu_2_trigger"},
+    {CAM_1, "cam_1_trigger"},
+    {CAM_2, "cam_2_trigger"},
+    {CAM_3, "cam_3_trigger"},
+    {CAM_4, "cam_4_trigger"},
+    {LASER, "laser_trigger"},
+    {GPS, "gps_trigger"}};
 }  // namespace infinite_sense
