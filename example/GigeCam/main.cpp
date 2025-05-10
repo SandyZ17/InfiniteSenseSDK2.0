@@ -3,7 +3,6 @@
 using namespace infinite_sense;
 void ImuCallback(const void* msg, size_t) {
   const auto* imu_data = static_cast<const ImuData*>(msg);
-  std::cout <<"-----\n";
   // 处理IMU数据
 }
 void ImageCallback(const void* msg, size_t) {
@@ -16,20 +15,22 @@ int main() {
   synchronizer.SetUsbLink("/dev/ttyACM0", 921600);
 
   // 2.配置同步接口
-//  auto mv_cam = std::make_shared<MvCam>();
-//  mv_cam->SetParams({{"camera_1", CAM_1}});
-//  synchronizer.UseSensor(mv_cam);
+  auto mv_cam = std::make_shared<MvCam>();
+  mv_cam->SetParams({{"camera_1", CAM_1}});
+  synchronizer.UseSensor(mv_cam);
 
   // 3.开启同步
   synchronizer.Start();
 
   // 4.接收数据
   Messenger::GetInstance().SubStruct("imu_1", ImuCallback);
-//  Messenger::GetInstance().SubStruct("camera_1", ImageCallback);
+  Messenger::GetInstance().SubStruct("camera_1", ImageCallback);
+
   // 5.停止同步
   while (true) {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
+
   synchronizer.Stop();
   return 0;
 }
