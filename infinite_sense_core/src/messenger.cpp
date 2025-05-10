@@ -26,11 +26,12 @@ void Messenger::CleanUp() {
     publisher_.close();
     subscriber_.close();
     context_.close();
-    for (auto& t : sub_threads_) {
-      if (t.joinable()) {
-        t.join();
+    for (auto& thread : sub_threads_) {
+      if (thread.joinable()) {
+        thread.join();
       }
     }
+    LOG(INFO) << "Messenger clean up successful";
   } catch (...) {
     LOG(ERROR) << "Messenger clean up error";
   }
