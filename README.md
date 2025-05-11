@@ -29,13 +29,12 @@
 
 # News
 
->1. Demo程序还在开发中，敬请期待！如果熟悉ZMQ，可以尝试了解一下SDK，并自己编写Demo程序。
->2. 开发者文档正在编写中，敬请期待！
->3. 关于第四代同步板还是希望尽可能非常稳定后再上架！硬件的稳定是我们最重视的。
+>1. 开发者文档正在编写中，敬请期待！
 
 <p align="center">
 <img  style="width:50%;"  alt="V4_board" src="assets/picture/v4_board.png">
 </p>
+
 # 支持设备
 
 >| 设备类型        | 品牌                          |同步方式 |
@@ -58,7 +57,7 @@ cmake..
 ```
 ## [同步板配置](assets/doc/board_config.md)
 ## [传感器接线](assets/doc/connection_config.md)
-## [Demo运行](assets/doc/run_demo.md)
+## [Demo运行与调试](assets/doc/run_demo.md)
 ## [协议解析](assets/doc/data_info.md)
 
 # 常见问题
