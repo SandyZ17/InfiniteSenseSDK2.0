@@ -1,5 +1,5 @@
 # 如何查看同步板上传数据
-如果是USB连接，则需要安装串口工具，如：cutecom。
+如果是USB连接:则需要安装串口工具，如：cutecom。
 ```bash
 sudo apt-get install cutecom # 下载(可选)
 sudo cutecom                 # 启动
@@ -18,7 +18,7 @@ echo “Hello InfiniteSense” | nc -u 192.168.1.188 8888
 <img  style="width:50%;"  alt="nc" src="../picture/nc.png">
 </p>
 
-
+---
 # IMU Data
 ```json
 {
