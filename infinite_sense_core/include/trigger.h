@@ -89,7 +89,7 @@ class TriggerManger {
    * @param time 触发时间戳。
    * @param status 当前触发状态。
    */
-  void PublishDeviceStatus(TriggerDevice dev, uint64_t time, bool status);
+  static void PublishDeviceStatus(TriggerDevice dev, uint64_t time, bool status);
   TriggerManger();
   ~TriggerManger() = default;
   uint8_t status_{0};
