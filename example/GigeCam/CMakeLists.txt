@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 
 project(gige_cam VERSION 1.0)
 
-# 检测平台并设置相关变量
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
     set(PLATFORM_DIR "arm")
     set(MVCAM_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/mvcam/lib/aarch64)
@@ -15,24 +14,63 @@ else ()
 endif ()
 message(STATUS "Find MVCAM_LIB_DIR : ${MVCAM_LIB_DIR}")
 
-
+# **************************编译普通节点*****************************
 add_executable(${PROJECT_NAME}
         main.cpp
         mv_cam.cpp
         mv_cam.h
 )
-target_link_directories(${PROJECT_NAME} PRIVATE
-        ${MVCAM_LIB_DIR}
-)
-
+target_link_directories(${PROJECT_NAME} PRIVATE ${MVCAM_LIB_DIR})
 target_link_libraries(${PROJECT_NAME} PRIVATE
         infinite_sense_core
         MvCameraControl
 )
+target_include_directories(${PROJECT_NAME} PRIVATE mvcam/include)
+set_target_properties(${PROJECT_NAME} PROPERTIES INSTALL_RPATH "$ORIGIN")
 
-target_include_directories(${PROJECT_NAME} PRIVATE
-        mvcam/include
-)
-set_target_properties(${PROJECT_NAME} PROPERTIES
-        INSTALL_RPATH "$ORIGIN"
-)
+# **************************编译ROS2节点*****************************
+find_package(rclcpp QUIET)
+if (NOT rclcpp_FOUND)
+    message(STATUS "rclcpp not found. ros2 demo will not be built")
+else ()
+    add_executable(${PROJECT_NAME}_ros2
+            main_ros2.cpp
+            mv_cam.cpp
+            mv_cam.h
+    )
+    target_link_directories(${PROJECT_NAME}_ros2 PRIVATE ${MVCAM_LIB_DIR})
+    target_include_directories(${PROJECT_NAME}_ros2 PUBLI mvcam/include)
+    target_link_libraries(${PROJECT_NAME}_ros2 PRIVATE
+            infinite_sense_core
+            MvCameraControl
+            rclcpp::rclcpp
+    )
+endif ()
+# **************************编译ROS1节点*****************************
+find_package(catkin QUIET)
+if (NOT catkin_FOUND)
+    message(STATUS "catkin found, ros1 demo will be built")
+else ()
+    find_package(catkin REQUIRED COMPONENTS
+            roscpp
+            sensor_msgs
+            cv_bridge
+            image_transport
+            geometry_msgs
+    )
+    file(GLOB_RECURSE SOURCE_FILES
+            ros_main.cpp
+    )
+    add_executable(${PROJECT_NAME}_ros ${SOURCE_FILES})
+    target_link_directories(${PROJECT_NAME}_ros PRIVATE ${MVCAM_LIB_DIR})
+    target_link_libraries(${PROJECT_NAME}_ros
+            infinite_sense_core
+            MvCameraControl
+            ${catkin_LIBRARIES}
+    )
+    target_include_directories(${PROJECT_NAME}_ros PRIVATE
+            ${catkin_INCLUDE_DIRS}
+    )
+    target_compile_definitions(${PROJECT_NAME}_ros PUBLIC -DROS_PLATFORM)
+endif ()
+
