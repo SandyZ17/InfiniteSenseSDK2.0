@@ -1,14 +1,14 @@
 
-# 第四代同步板(V4)快速上手
+# 第四代同步板快速上手
 
-## 1. 连接TYPC并更新固件
+## 1. 更新固件
 ### 1.1 连接TYPC
 ### 1.2 下载并上传固件
-按住BOOT按钮，不要松开，然后按一下RESET按钮，进入下载模式。系统会自动弹出U盘。将最新的固件移动到U盘中。移动完成后系统会自动删除U盘。这时候最新的固件已经被成功加载了。
+按住BOOT按钮，不要松开，将TYPC插入到电脑上电后，松开BOOT按钮，电脑会自动识别并识别为USB存储设备。将最新的固件移动到U盘中。移动完成后系统会自动删除U盘。这时候最新的固件已经被成功加载了。
 ### 1.3 重启
 按住RST按钮，然后松开，等待5秒左右。同步板USB将会打印如下信息：
 ```JSON
-{"f":"log","t":1003530,"l":"INFO","msg":"[USB-TYPC] Configuration complete! baudrate:921600"}
+{"f":"log","t":1003530,"l":"INFO","msg":"[USB-TYPC] Configuration complet! baudrate:92160e0"}
 {"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":1,"hz_cam_2":2,"hz_cam_3":4,"hz_cam_4":8,"hz_imu_2":10,"xtal_diff":0,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}
 {"f":"log","t":1008121,"l":"INFO","msg":"Port parsed: 8888"}
 {"f":"log","t":1008753,"l":"INFO","msg":"IP array set: 192.168.1.188"}
