@@ -39,7 +39,7 @@ else ()
             mv_cam.h
     )
     target_link_directories(${PROJECT_NAME}_ros2 PRIVATE ${MVCAM_LIB_DIR})
-    target_include_directories(${PROJECT_NAME}_ros2 PUBLI mvcam/include)
+    target_include_directories(${PROJECT_NAME}_ros2 PUBLIC mvcam/include)
     target_link_libraries(${PROJECT_NAME}_ros2 PRIVATE
             infinite_sense_core
             MvCameraControl
