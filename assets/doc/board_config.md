@@ -3,7 +3,31 @@
 
 ## 如何更新固件
 ## 如何重启
-
+按住复位按钮，然后松开，等待5秒左右。同步板USB将会打印如下信息：
+```JSON
+{"f":"log","t":1003530,"l":"INFO","msg":"[USB-TYPC] Configuration complete! baudrate:921600"}
+{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":1,"hz_cam_2":2,"hz_cam_3":4,"hz_cam_4":8,"hz_imu_2":10,"xtal_diff":0,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}
+{"f":"log","t":1008121,"l":"INFO","msg":"Port parsed: 8888"}
+{"f":"log","t":1008753,"l":"INFO","msg":"IP array set: 192.168.1.188"}
+{"f":"log","t":1009493,"l":"INFO","msg":"Subnet array set: 255.255.255.0"}
+{"f":"log","t":1010282,"l":"INFO","msg":"Device frequencies parsed: [1, 2, 4, 8, 10]"}
+{"f":"log","t":1011140,"l":"INFO","msg":"UART baud rates parsed: [921600, 9600, 115200]"}
+{"f":"log","t":1012011,"l":"INFO","msg":"GPS and PPS flags parsed: use_gps:1, use_pps:1"}
+{"f":"log","t":1012871,"l":"INFO","msg":"Xtal diff set: 0"}
+{"f":"log","t":1013492,"l":"INFO","msg":"Version set: 400"}
+{"f":"log","t":1013991,"l":"INFO","msg":"Version parsed: 400"}
+{"f":"log","t":2014635,"l":"INFO","msg":"[USB-TYPC] Configuration complete! baudrate:921600"}
+{"f":"log","t":2596038,"l":"ERROR","msg":"[Ethernet] Turn off ethernet transfer."}
+{"f":"log","t":2596851,"l":"ERROR","msg":"[Ethernet] Cable is not connected."}
+{"f":"log","t":2597564,"l":"INFO","msg":"[Ethernet] Start using the serial to transfer data!"}
+{"f":"log","t":3104973,"l":"INFO","msg":"[LIDAR] Configuration complete! baudrate:9600"}
+{"f":"log","t":3205978,"l":"INFO","msg":"[GPS/RTK] Configuration complete!! baudrate:115200"}
+{"f":"log","t":3788507,"l":"INFO","msg":"[IMU] Configuration complete!"}
+{"f":"GNGGA","g":false,"t":3274884,"d":"$GNGGA,,,,,,0,00,99.99,,,,,,*56\r","pps":0}
+{"f":"t","cpu":250000000,"s":1,"t":3799274,"c":5}
+{"f":"imu","t":3799274,"c":5,"d":[1.685578,-0.253794,9.859674,0.001018,0.001038,-6.907073e-6,30.99336],"q":[1.000084,-0.001264,-0.008392,-0.000011]}
+{"f":"t","cpu":250000000,"s":1,"t":3809274,"c":10}
+```
 ## 如何连接网络
 
 ## 如何配置同步板参数
@@ -38,9 +62,27 @@ sudo cutecom                 # 启动
   "xtal_diff":0,              // 晶振偏差修正
   "version": 400              // 固件版本号(V3/MINI：300，V4：400)
 ```
+配置完成后串口助手打印如下信息：
+```angular2html
+{"f":"log","t":11320243,"l":"INFO","msg":"Config file received!"}
+{"f":"log","t":11321532,"l":"INFO","msg":"Config set ok"}
+{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":1,"hz_cam_2":2,"hz_cam_3":4,"hz_cam_4":8,"hz_imu_2":10,"xtal_diff":0,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}
+{"f":"log","t":11325745,"l":"INFO","msg":"Port parsed: 8888"}
+{"f":"log","t":11326439,"l":"INFO","msg":"IP array set: 192.168.1.188"}
+{"f":"log","t":11327234,"l":"INFO","msg":"Subnet array set: 255.255.255.0"}
+{"f":"log","t":11328054,"l":"INFO","msg":"Device frequencies parsed: [1, 2, 4, 8, 10]"}
+{"f":"log","t":11329034,"l":"INFO","msg":"UART baud rates parsed: [921600, 9600, 115200]"}
+{"f":"log","t":11329939,"l":"INFO","msg":"GPS and PPS flags parsed: use_gps:1, use_pps:1"}
+{"f":"log","t":11330800,"l":"INFO","msg":"Xtal diff set: 0"}
+{"f":"log","t":11331380,"l":"INFO","msg":"Version set: 400"}
+{"f":"log","t":11331935,"l":"INFO","msg":"Version parsed: 400"}
+{"f":"log","t":1003932,"l":"INFO","msg":"[USB-TYPC] Configuration complete! baudrate:921600"}
+{"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":1,"hz_cam_2":2,"hz_cam_3":4,"hz_cam_4":8,"hz_imu_2":10,"xtal_diff":0,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}
+```
 
 # 第三代同步板(V3/MINI)
 固件支持网口和串口配置，配置完成后自动重启并加载最新配置。打开任意串口工具发送以下指令：
 ```python
 {"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":10,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":300}\n
 ```
+
