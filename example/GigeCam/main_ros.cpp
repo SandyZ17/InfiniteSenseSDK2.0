@@ -1,4 +1,3 @@
-#include "rclcpp/rclcpp.hpp"
 // 加入SDK头文件
 #include "infinite_sense.h"
 // 加入工业相机头文件

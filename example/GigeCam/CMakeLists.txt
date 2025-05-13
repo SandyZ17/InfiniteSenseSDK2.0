@@ -33,6 +33,7 @@ find_package(rclcpp QUIET)
 if (NOT rclcpp_FOUND)
     message(STATUS "rclcpp not found. ros2 demo will not be built")
 else ()
+    message(STATUS "rclcpp found. ros2 demo will be built")
     add_executable(${PROJECT_NAME}_ros2
             main_ros2.cpp
             mv_cam.cpp
