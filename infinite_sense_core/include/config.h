@@ -25,11 +25,9 @@ struct LaserData {
 
 struct GPSData {
   uint64_t time_stamp_us;
-  uint64_t gps_stamp_us;
-  uint64_t gps_stamp_us_trigger;
+  uint64_t trigger_time_us;
   std::string name;
-  float latitude;
-  float longitude;
+  std::string data;
 };
 
 enum TriggerDevice {

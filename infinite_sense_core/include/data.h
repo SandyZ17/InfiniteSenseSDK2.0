@@ -37,10 +37,8 @@ inline void ProcessGPSData(const nlohmann::json &data) {
     return;
   }
   GPSData gps{};
-  gps.latitude = data["d"][0];
-  gps.longitude = data["d"][1];
-  gps.gps_stamp_us = data["d"][2];
-  gps.gps_stamp_us_trigger = data["d"][3];
+  gps.data = data["d"];
+  gps.trigger_time_us = data["pps"];
   gps.time_stamp_us = data["t"];
   Messenger::GetInstance().PubStruct("gps", &gps, sizeof(gps));
 };
