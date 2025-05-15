@@ -3,7 +3,7 @@
   <name>gige_cam</name>
   <version>1.0.0</version>
   <description>The infinite sense camera package</description>
-  <maintainer email="">infinite sense</maintainer>
+  <maintainer email="www.qq837374741@foxmail.com">infinite sense</maintainer>
   <license>BSD</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
 

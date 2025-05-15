@@ -34,18 +34,39 @@ if (NOT rclcpp_FOUND)
     message(STATUS "rclcpp not found. ros2 demo will not be built")
 else ()
     message(STATUS "rclcpp found. ros2 demo will be built")
+    find_package(ament_cmake REQUIRED)
+    find_package(std_msgs REQUIRED)
+    find_package(sensor_msgs REQUIRED)
+    find_package(image_transport REQUIRED)
+    find_package(OpenCV REQUIRED)
+    find_package(cv_bridge REQUIRED)
     add_executable(${PROJECT_NAME}_ros2
             main_ros2.cpp
             mv_cam.cpp
             mv_cam.h
     )
     target_link_directories(${PROJECT_NAME}_ros2 PRIVATE ${MVCAM_LIB_DIR})
-    target_include_directories(${PROJECT_NAME}_ros2 PUBLIC mvcam/include)
-    target_link_libraries(${PROJECT_NAME}_ros2 PRIVATE
+    target_include_directories(${PROJECT_NAME}_ros2 PUBLIC mvcam/include ${OpenCV_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME}_ros2
             infinite_sense_core
+            ${OpenCV_LIBRARIES}
             MvCameraControl
-            rclcpp::rclcpp
     )
+    set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+    set(CMAKE_INSTALL_RPATH ${MVS_LIBRARIES})
+    ament_target_dependencies(${PROJECT_NAME}_ros2
+            rclcpp
+            std_msgs
+            sensor_msgs
+            image_transport
+            OpenCV
+            cv_bridge
+    )
+    install(TARGETS ${PROJECT_NAME}_ros2
+            DESTINATION lib/${PROJECT_NAME}
+    )
+    ament_package()
+
 endif ()
 # **************************编译ROS1节点*****************************
 find_package(catkin QUIET)

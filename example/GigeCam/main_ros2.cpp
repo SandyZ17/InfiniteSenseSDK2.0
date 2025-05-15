@@ -1,40 +1,27 @@
-#include "rclcpp/rclcpp.hpp"
-// 加入SDK头文件
 #include "infinite_sense.h"
-// 加入工业相机头文件
-#include "mv_cam.h"
-using namespace infinite_sense;
-// 自定义回调函数
-void ImuCallback(const void* msg, size_t) {
-  const auto* imu_data = static_cast<const ImuData*>(msg);
-  // 处理IMU数据
-}
-// 自定义回调函数
-void ImageCallback(const void* msg, size_t) {
-  const auto* cam_data = static_cast<const CamData*>(msg);
-  // 处理图像数据
-}
-int main() {
-  // 1.创建同步器
-  Synchronizer synchronizer;
-  synchronizer.SetUsbLink("/dev/ttyACM0", 921600);
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+#include "sensor_msgs/msg/image.hpp"
+#include "sensor_msgs/image_encodings.hpp"
+#include <image_transport/image_transport.hpp>
+#include "opencv2/highgui/highgui.hpp"
+#include <opencv2/imgproc.hpp>
+class InfiniteSenseGigeDriver : public rclcpp::Node {
+ public:
+  InfiniteSenseGigeDriver() : Node("gige_driver"),node_handle_(),transport_(node_handle_),img_pub_(transport_.advertise("camera/image_raw", 1)) {
 
-  // 2.配置同步接口
-  auto mv_cam = std::make_shared<MvCam>();
-  mv_cam->SetParams({{"camera_1", CAM_1}});
-  synchronizer.UseSensor(mv_cam);
-
-  // 3.开启同步
-  synchronizer.Start();
-
-  // 4.接收数据
-  Messenger::GetInstance().SubStruct("imu_1", ImuCallback);
-  Messenger::GetInstance().SubStruct("camera_1", ImageCallback);
-  // 阻塞线程
-  while (true) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
-  // 5.停止同步
-  synchronizer.Stop();
+ private:
+  rclcpp::Node::SharedPtr node_handle_ ;
+  image_transport::ImageTransport transport_;
+  image_transport::Publisher img_pub_;
+};
+
+int main(int argc, char* argv[])
+{
+
+  rclcpp::init(argc, argv);
+  rclcpp::shutdown();
+
   return 0;
 }
