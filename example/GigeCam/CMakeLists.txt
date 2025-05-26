@@ -66,7 +66,6 @@ else ()
             DESTINATION lib/${PROJECT_NAME}
     )
     ament_package()
-
 endif ()
 # **************************编译ROS1节点*****************************
 find_package(catkin QUIET)

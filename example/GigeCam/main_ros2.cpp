@@ -8,18 +8,19 @@
 #include <opencv2/imgproc.hpp>
 class InfiniteSenseGigeDriver : public rclcpp::Node {
  public:
-  InfiniteSenseGigeDriver() : Node("gige_driver"),node_handle_(),transport_(node_handle_),img_pub_(transport_.advertise("camera/image_raw", 1)) {
+  InfiniteSenseGigeDriver()
+      : Node("gige_driver"),
+        node_handle_(),
+        transport_(node_handle_),
+        img_pub_(transport_.advertise("camera/image_raw", 1)) {}
 
-  }
  private:
-  rclcpp::Node::SharedPtr node_handle_ ;
+  rclcpp::Node::SharedPtr node_handle_;
   image_transport::ImageTransport transport_;
   image_transport::Publisher img_pub_;
 };
 
-int main(int argc, char* argv[])
-{
-
+int main(int argc, char* argv[]) {
   rclcpp::init(argc, argv);
   rclcpp::shutdown();
 
