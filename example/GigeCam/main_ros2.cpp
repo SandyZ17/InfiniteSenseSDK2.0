@@ -3,9 +3,9 @@
 #include "std_msgs/msg/string.hpp"
 #include "sensor_msgs/msg/image.hpp"
 #include "sensor_msgs/image_encodings.hpp"
-#include <image_transport/image_transport.hpp>
+#include "image_transport/image_transport.hpp"
 #include "opencv2/highgui/highgui.hpp"
-#include <opencv2/imgproc.hpp>
+#include "opencv2/imgproc.hpp"
 class InfiniteSenseGigeDriver : public rclcpp::Node {
  public:
   InfiniteSenseGigeDriver()
