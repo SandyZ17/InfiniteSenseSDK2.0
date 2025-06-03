@@ -41,13 +41,13 @@ sudo apt-get install cutecom # 下载
 sudo cutecom                 # 启动
 ```
 ### 3.2 参数配置上传到同步板
-固件支持网口和串口配置，配置完成后自动重启并加载最新配置。打开任意串口工具发送以下指令：
+固件支持网口和串口配置，配置完成后自动重启并加载最新配置。打开任意串口工具发送以下指令：在输入以下指令，然后按回车键发送。
 
-```python
+```json lines
 {"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":1,"hz_cam_2":2,"hz_cam_3":4,"hz_cam_4":8,"hz_imu_2":10,"xtal_diff":0,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}\n
 ```
 对应指令说明：
-```python
+```json
   "f": "cfg",                 // 配置文件类型标识符（固定为"cfg"）
   "port": 8888,               // 网络通信端口号
   "ip": [192,168,1,188],      // 设备IP地址
@@ -82,6 +82,15 @@ sudo cutecom                 # 启动
 {"f":"log","t":1003932,"l":"INFO","msg":"[USB-TYPC] Configuration complete! baudrate:921600"}
 {"f":"cfg","port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":1,"hz_cam_2":2,"hz_cam_3":4,"hz_cam_4":8,"hz_imu_2":10,"xtal_diff":0,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400}
 ```
+
+### 3.3 恢复出厂设置
+
+由于同步板的配置参数较多，部分用户参数配置错误，导致无法正常工作。因此，需要恢复出厂设置。
+1. 按住BOOT按钮，不要松开，将TYPC插入到电脑上电后，松开BOOT按钮，电脑会自动识别并识别为USB存储设备。将重置固件(SDK2_FIRMWARE_FACTORY_RESET.uf2)移动到U盘中。移动完成后系统会自动删除U盘。这时候最新的固件已经被成功加载了。
+在重置固件中默认使用以下配置命令进行的配置："port":8888,"ip":[192,168,1,188],"subnet":[255,255,255,0],"hz_cam_1":1,"hz_cam_2":2,"hz_cam_3":4,"hz_cam_4":8,"hz_imu_2":10,"xtal_diff":0,"uart_0_baud_rate":921600,"uart_1_baud_rate":9600,"uart_2_baud_rate":115200,"use_gps":true,"use_pps":true,"version":400
+2. 重置完成后，重新上电，系统自动加载上述配置。
+3. 正常运行后。可以发送3.2节的指令进行配置，即可以重新更新默认配置。
+4. 默认配置更新后，刷入最新固件即可。
 
 # 第三代同步板(V3/MINI)
 固件支持网口和串口配置，配置完成后自动重启并加载最新配置。打开任意串口工具发送以下指令：
