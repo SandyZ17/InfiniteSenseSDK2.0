@@ -16,7 +16,7 @@
 
 
 # 雷达类
-# Mid360配置
+# Mid360
 
 <p align="center">
 <img  style="width:50%;"  alt="mid360" src="../picture/link/MID360.png">
