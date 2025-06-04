@@ -1,9 +1,10 @@
 # 相机类传感器连接配置
-## 工业相机类
 ## 带有触发器的相机
 <p align="center">
 <img  style="width:50%;"  alt="usb_camera" src="../picture/link/USB.jpg">
 </p>
+
+## 工业相机类
 
 <p align="center">
 <img  style="width:50%;"  alt="gige_camera" src="../picture/link/CAM.png">
