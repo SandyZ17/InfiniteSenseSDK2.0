@@ -1,10 +1,10 @@
-# 相机类传感器连接配置
-## 带有触发器的相机类
+# 相机类
+## 带有触发的USB相机
 <p align="center">
 <img  style="width:50%;"  alt="usb_camera" src="../picture/link/USB.jpg">
 </p>
 
-## 工业相机类
+## 工业相机
 
 <p align="center">
 <img  style="width:50%;"  alt="gige_camera" src="../picture/link/CAM.png">
@@ -15,7 +15,7 @@
 </p>
 
 
-# 雷达类传感器连接配置
+# 雷达类
 # Mid360配置
 
 <p align="center">
