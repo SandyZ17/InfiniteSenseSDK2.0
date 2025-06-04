@@ -1,5 +1,5 @@
 # 相机类传感器连接配置
-## 带有触发器的相机
+## 带有触发器的相机类
 <p align="center">
 <img  style="width:50%;"  alt="usb_camera" src="../picture/link/USB.jpg">
 </p>
@@ -22,12 +22,12 @@
 <img  style="width:50%;"  alt="mid360" src="../picture/link/MID360.png">
 </p>
 
-# GPS类传感器连接配置
+# GPS类
 
 <p align="center">
 <img  style="width:50%;"  alt="gps" src="../picture/link/GPS.jpg">
 </p>
 
-# IMU类传感器连接配置
+# IMU类
 
 # 其他传感器连接配置
