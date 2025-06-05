@@ -31,9 +31,9 @@ set_target_properties(${PROJECT_NAME} PROPERTIES INSTALL_RPATH "$ORIGIN")
 # **************************编译ROS2节点*****************************
 find_package(rclcpp QUIET)
 if (NOT rclcpp_FOUND)
-    message(STATUS "rclcpp not found. ros2 demo will not be built")
+    message(STATUS "rclcpp not found. ROS2 demo will not be built")
 else ()
-    message(STATUS "rclcpp found. ros2 demo will be built")
+    message(STATUS "rclcpp found. ROS2 demo will be built")
     find_package(ament_cmake REQUIRED)
     find_package(std_msgs REQUIRED)
     find_package(sensor_msgs REQUIRED)
@@ -67,11 +67,13 @@ else ()
     )
     ament_package()
 endif ()
+
 # **************************编译ROS1节点*****************************
 find_package(catkin QUIET)
 if (NOT catkin_FOUND)
-    message(STATUS "catkin found, ros1 demo will be built")
+    message(STATUS "catkin not found, ROS1 demo will not be built")
 else ()
+    message(STATUS "catkin found. ROS1 demo will be built")
     find_package(catkin REQUIRED COMPONENTS
             roscpp
             sensor_msgs
