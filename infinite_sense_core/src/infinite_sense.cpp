@@ -13,6 +13,9 @@ Synchronizer::Synchronizer() {
             << "    █  ▐▛▚▖▐▌▐▌     █  ▐▛▚▖▐▌  █    █  ▐▌   ▐▌   ▐▌   ▐▛▚▖▐▌▐▌   ▐▌   " << "\n"
             << "    █  ▐▌ ▝▜▌▐▛▀▀▘  █  ▐▌ ▝▜▌  █    █  ▐▛▀▀▘ ▝▀▚▖▐▛▀▀▘▐▌ ▝▜▌ ▝▀▚▖▐▛▀▀▘" << "\n"
             << "  ▗▄█▄▖▐▌  ▐▌▐▌   ▗▄█▄▖▐▌  ▐▌▗▄█▄▖  █  ▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▐▌  ▐▌▗▄▄▞▘▐▙▄▄▖";
+  int major,minor,patch;
+  zmq_version(&major,&minor,&patch);
+  LOG(INFO) << "ZeroMQ version: " << major << "." << minor << "." << patch;
 };
 void Synchronizer::SetLogPath(const std::string& path) { SetLogDestination(FATAL, path.c_str()); }
 void Synchronizer::SetNetLink(std::string net_dev, const unsigned int port) {
