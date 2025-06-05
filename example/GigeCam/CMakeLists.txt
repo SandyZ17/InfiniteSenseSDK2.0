@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(gige_cam VERSION 1.0)
-
+message(STATUS "System Processor: ${CMAKE_SYSTEM_PROCESSOR}")
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
     set(PLATFORM_DIR "arm")
     set(MVCAM_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/mvcam/lib/aarch64)
