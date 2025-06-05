@@ -13,8 +13,8 @@ Synchronizer::Synchronizer() {
             << "    █  ▐▛▚▖▐▌▐▌     █  ▐▛▚▖▐▌  █    █  ▐▌   ▐▌   ▐▌   ▐▛▚▖▐▌▐▌   ▐▌   " << "\n"
             << "    █  ▐▌ ▝▜▌▐▛▀▀▘  █  ▐▌ ▝▜▌  █    █  ▐▛▀▀▘ ▝▀▚▖▐▛▀▀▘▐▌ ▝▜▌ ▝▀▚▖▐▛▀▀▘" << "\n"
             << "  ▗▄█▄▖▐▌  ▐▌▐▌   ▗▄█▄▖▐▌  ▐▌▗▄█▄▖  █  ▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▐▌  ▐▌▗▄▄▞▘▐▙▄▄▖";
-  int major,minor,patch;
-  zmq_version(&major,&minor,&patch);
+  int major, minor, patch;
+  zmq_version(&major, &minor, &patch);
   LOG(INFO) << "ZeroMQ version: " << major << "." << minor << "." << patch;
 };
 void Synchronizer::SetLogPath(const std::string& path) { SetLogDestination(FATAL, path.c_str()); }
@@ -43,7 +43,7 @@ void Synchronizer::Start() const {
     sensor_manager_->Initialization();
     sensor_manager_->Start();
   }
-  LOG(INFO) << "Synchronizer started";
+  LOG(INFO) << "Synchronizer Started";
 }
 void Synchronizer::Stop() const {
   if (net_manager_) {
@@ -55,7 +55,7 @@ void Synchronizer::Stop() const {
   if (sensor_manager_) {
     sensor_manager_->Stop();
   }
-  LOG(INFO) << "Synchronizer stopped";
+  LOG(INFO) << "Synchronizer Stopped";
 }
 
 }  // namespace infinite_sense
