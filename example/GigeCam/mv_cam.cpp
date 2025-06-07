@@ -140,7 +140,7 @@ bool MvCam::Initialization() {
     if (MV_OK != rets_[i]) {
       LOG(ERROR) << "MV_CC_StartGrabbing fail! n_ret [" << rets_[i] << "]";
     }
-    LOG(INFO) << "Camera " << i << " opens to completion";
+    LOG(INFO) << "Camera " << i << " opens to completion.";
   }
   if (0 == st_device_list.nDeviceNum) {
     return true;
@@ -258,12 +258,13 @@ void MvCam::Start() {
     Enable();
     auto name = std::string(pst_value.chCurValue);
     if (name.empty()) {
-      static int cam_index{0};
+      // 相机名称默认从1开始
+      static int cam_index{1};
       name = "cam_" + std::to_string(cam_index++);
-      LOG(WARNING) << "Camera name is empty,create name " << name;
+      LOG(WARNING) << "Camera name is empty,Create new name: " << name;
     }
     cam_threads.emplace_back(&MvCam::Receive, this, handle, name);
-    LOG(INFO) << "Camera name is " << name << " start";
+    LOG(INFO) << "Camera name is " << name << " start.";
   }
 }
 }  // namespace infinite_sense

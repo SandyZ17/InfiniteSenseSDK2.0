@@ -42,7 +42,7 @@ void UsbManager::Start() {
   started_ = true;
   rx_thread_ = std::thread(&UsbManager::Receive, this);
   tx_thread_ = std::thread(&UsbManager::TimeStampSynchronization, this);
-  LOG(INFO) << "USB manager started";
+  LOG(INFO) << "USB manager started.";
 }
 
 void UsbManager::Stop() {

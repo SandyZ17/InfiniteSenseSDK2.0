@@ -43,7 +43,7 @@ void Synchronizer::Start() const {
     sensor_manager_->Initialization();
     sensor_manager_->Start();
   }
-  LOG(INFO) << "Synchronizer Started";
+  LOG(INFO) << "Synchronizer Started.";
 }
 void Synchronizer::Stop() const {
   if (net_manager_) {
