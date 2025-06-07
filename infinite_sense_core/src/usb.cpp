@@ -5,8 +5,7 @@
 
 namespace infinite_sense {
 
-UsbManager::UsbManager(std::string  port, int baud_rate)
-    : port_(std::move(port)), started_(false) {
+UsbManager::UsbManager(std::string port, int baud_rate) : port_(std::move(port)), started_(false) {
   serial_ptr_ = std::make_unique<serial::Serial>();
   try {
     serial_ptr_->setPort(port_);
@@ -37,7 +36,7 @@ UsbManager::~UsbManager() {
 
 void UsbManager::Start() {
   if (!serial_ptr_ || !serial_ptr_->isOpen()) {
-    LOG(ERROR) << "Cannot start USB manager: serial port not open.";
+    LOG(ERROR) << "Cannot start USB manager: Serial port not open.";
     return;
   }
   started_ = true;
