@@ -17,7 +17,8 @@ public:
           transport_(node_handle_) {
         std::string camera_name = "cam_1";
         const std::string imu_name = "imu_1";
-        synchronizer_.SetUsbLink("/dev/ttyACM0", 921600);
+        // synchronizer_.SetUsbLink("/dev/ttyACM0", 921600);
+        synchronizer_.SetNetLink("192.168.1.188",8888);
         const auto mv_cam = std::make_shared<infinite_sense::MvCam>();
         mv_cam->SetParams({{camera_name, infinite_sense::CAM_1}});
         synchronizer_.UseSensor(mv_cam);
@@ -36,7 +37,7 @@ public:
         const auto *imu_data = static_cast<const infinite_sense::ImuData *>(msg);
         sensor_msgs::msg::Imu imu_msg;
         imu_msg.header.stamp = rclcpp::Time(imu_data->time_stamp_us * 1000);
-        imu_msg.header.frame_id = "imu_link";
+        imu_msg.header.frame_id = "map";
         imu_msg.linear_acceleration.x = imu_data->a[0];
         imu_msg.linear_acceleration.y = imu_data->a[1];
         imu_msg.linear_acceleration.z = imu_data->a[2];
@@ -54,7 +55,7 @@ public:
         const auto *cam_data = static_cast<const infinite_sense::CamData *>(msg);
         std_msgs::msg::Header header;
         header.stamp = rclcpp::Time(cam_data->time_stamp_us * 1000);
-        header.frame_id = "camera_link";
+        header.frame_id = "map";
         const cv::Mat image_mat(cam_data->image.rows, cam_data->image.cols, CV_8UC1, cam_data->image.data);
         const sensor_msgs::msg::Image::SharedPtr image_msg =
                 cv_bridge::CvImage(header, "mono8", image_mat).toImageMsg();

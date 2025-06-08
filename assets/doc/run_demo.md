@@ -19,10 +19,13 @@ cd build/tools
 cd build/examples/GigeCam
 ./gige_cam
 ```
-### 运行工业相机ROS节点
+## 运行工业相机ROS2节点
+### 查看IMU数据
+```bash
+  sudo apt-get install ros-${ROS_DISTRO}-imu-tools
+```
 
-
-
+#
 
 ##  使用SDKC++开发的基本流程如下：
 ```C++
