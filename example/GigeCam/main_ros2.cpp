@@ -11,17 +11,19 @@ public:
         : Node("gige_driver"),
           node_handle_(std::shared_ptr<CamDriver>(this, [](auto *) {})),
           transport_(node_handle_) {
+        std::string camera_name = "cam_1";
+        std::string imu_name = "imu_1";
         synchronizer_.SetUsbLink("/dev/ttyACM0", 921600);
         const auto mv_cam = std::make_shared<infinite_sense::MvCam>();
-        mv_cam->SetParams({{"cam_1", infinite_sense::CAM_1}});
+        mv_cam->SetParams({{camera_name, infinite_sense::CAM_1}});
         synchronizer_.UseSensor(mv_cam);
         synchronizer_.Start();
-        imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>("imu/data", 10);
-        img_pub_ = transport_.advertise("image_raw", 10);
+        imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>(imu_name, 10);
+        img_pub_ = transport_.advertise(camera_name, 10);
         {
             using namespace std::placeholders;
-            infinite_sense::Messenger::GetInstance().SubStruct("imu_1", std::bind(&CamDriver::ImuCallback, this, _1, _2));
-            infinite_sense::Messenger::GetInstance().SubStruct("cam_1", std::bind(&CamDriver::ImageCallback, this, _1, _2));
+            infinite_sense::Messenger::GetInstance().SubStruct(imu_name, std::bind(&CamDriver::ImuCallback, this, _1, _2));
+            infinite_sense::Messenger::GetInstance().SubStruct(camera_name, std::bind(&CamDriver::ImageCallback, this, _1, _2));
         }
     }
     void ImuCallback(const void* msg, size_t) const {
