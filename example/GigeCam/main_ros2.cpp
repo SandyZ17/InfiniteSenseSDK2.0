@@ -27,8 +27,7 @@ public:
     void ImuCallback(const void* msg, size_t) const {
         const auto* imu_data = static_cast<const infinite_sense::ImuData*>(msg);
         sensor_msgs::msg::Imu imu_msg;
-        rclcpp::Time stamp(static_cast<uint64_t>(imu_data->time_stamp_us) * 1000); // 微秒 -> 纳秒
-        imu_msg.header.stamp = stamp;
+        imu_msg.header.stamp =  rclcpp::Time(imu_data->time_stamp_us * 1000);
         imu_msg.header.frame_id = "imu_link";
         imu_msg.linear_acceleration.x = imu_data->a[0];
         imu_msg.linear_acceleration.y = imu_data->a[1];
@@ -42,14 +41,13 @@ public:
         imu_msg.orientation.z = imu_data->q[3];
         imu_pub_->publish(imu_msg);
     }
-    void ImageCallback(const void* msg, size_t) {
+    void ImageCallback(const void* msg, size_t) const {
         const auto* cam_data = static_cast<const infinite_sense::CamData*>(msg);
-        // 构造 ROS2 图像消息
         std_msgs::msg::Header header;
         header.stamp = rclcpp::Time(cam_data->time_stamp_us * 1000);  // us -> ns
         header.frame_id = "camera_link";
         const cv::Mat image_mat(cam_data->image.rows, cam_data->image.cols, CV_8UC1, cam_data->image.data);
-        sensor_msgs::msg::Image::SharedPtr image_msg =
+        const sensor_msgs::msg::Image::SharedPtr image_msg =
             cv_bridge::CvImage(header, "mono8", image_mat).toImageMsg();
         img_pub_.publish(image_msg);
     }
