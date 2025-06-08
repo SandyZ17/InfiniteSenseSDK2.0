@@ -44,7 +44,7 @@ public:
     void ImageCallback(const void* msg, size_t) const {
         const auto* cam_data = static_cast<const infinite_sense::CamData*>(msg);
         std_msgs::msg::Header header;
-        header.stamp = rclcpp::Time(cam_data->time_stamp_us * 1000);  // us -> ns
+        header.stamp = rclcpp::Time(cam_data->time_stamp_us * 1000);
         header.frame_id = "camera_link";
         const cv::Mat image_mat(cam_data->image.rows, cam_data->image.cols, CV_8UC1, cam_data->image.data);
         const sensor_msgs::msg::Image::SharedPtr image_msg =
