@@ -46,7 +46,7 @@ void Messenger::Pub(const std::string& topic, const std::string& metadata) {
   }
 }
 
-void Messenger::PubStruct(const std::string& topic, const void* data, size_t size) {
+void Messenger::PubStruct(const std::string& topic, const void* data, const size_t size) {
   try {
     publisher_.send(zmq::buffer(topic), zmq::send_flags::sndmore);
     publisher_.send(zmq::buffer(data, size), zmq::send_flags::dontwait);
@@ -56,12 +56,11 @@ void Messenger::PubStruct(const std::string& topic, const void* data, size_t siz
 }
 
 void Messenger::Sub(const std::string& topic, const std::function<void(const std::string&)>& callback) {
-  sub_threads_.emplace_back([=, this]() {
+  sub_threads_.emplace_back([this, topic, callback]() {
     try {
       zmq::socket_t subscriber(context_, zmq::socket_type::sub);
       subscriber.connect(endpoint_);
       subscriber.set(zmq::sockopt::subscribe, topic);
-
       while (true) {
         zmq::message_t topic_msg, data_msg;
         if (!subscriber.recv(topic_msg) || !subscriber.recv(data_msg)) {
@@ -82,9 +81,9 @@ void Messenger::Sub(const std::string& topic, const std::function<void(const std
 }
 
 void Messenger::SubStruct(const std::string& topic, const std::function<void(const void*, size_t)>& callback) {
-  sub_threads_.emplace_back([=, this]() {
+  sub_threads_.emplace_back([this, topic, callback]() {
     try {
-      zmq::context_t context = zmq::context_t(1);
+      auto context = zmq::context_t(1);
       zmq::socket_t subscriber(context, zmq::socket_type::sub);
       subscriber.connect(endpoint_);
       subscriber.set(zmq::sockopt::subscribe, topic);

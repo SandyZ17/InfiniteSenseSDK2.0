@@ -6,6 +6,7 @@ using namespace infinite_sense;
 // 自定义回调函数
 void ImuCallback(const void* msg, size_t) {
   const auto* imu_data = static_cast<const ImuData*>(msg);
+  LOG(INFO) << imu_data->time_stamp_us << " " << "Accel: " << imu_data->a[0] << " " << imu_data->a[1] << " " << imu_data->a[2] << " Gyro: " << imu_data->g[0] << " " << imu_data->g[1] << " " << imu_data->g[2] << " Temp: " << imu_data->temperature;
   // 处理IMU数据
 }
 // 自定义回调函数

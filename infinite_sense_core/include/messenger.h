@@ -7,6 +7,9 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <functional>
+
+#include "config.h"
+
 namespace infinite_sense {
 class Messenger {
  public:
@@ -22,7 +25,7 @@ class Messenger {
   void Sub(const std::string& topic, const std::function<void(const std::string&)>& callback);
   void SubStruct(const std::string& topic, const std::function<void(const void*, size_t)>& callback);
 
- private:
+private:
   Messenger();
   ~Messenger();
   void CleanUp();
