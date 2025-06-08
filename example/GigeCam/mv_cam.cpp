@@ -60,12 +60,10 @@ bool PrintDeviceInfo(const MV_CC_DEVICE_INFO *info) {
     LOG(INFO) << "  Device Model Name    : " << info->SpecialInfo.stGigEInfo.chModelName;
     LOG(INFO) << "  Current IP Address   : " << n_ip1 << "." << n_ip2 << "." << n_ip3 << "." << n_ip4;
     LOG(INFO) << "  User Defined Name    : " << info->SpecialInfo.stGigEInfo.chUserDefinedName;
-  }
-  else if (info->nTLayerType == MV_USB_DEVICE) {
+  } else if (info->nTLayerType == MV_USB_DEVICE) {
     LOG(INFO) << "  Device Model Name    : " << info->SpecialInfo.stUsb3VInfo.chModelName;
     LOG(INFO) << "  User Defined Name    : " << info->SpecialInfo.stUsb3VInfo.chUserDefinedName;
-  }
-  else {
+  } else {
     LOG(ERROR) << "[ERROR] Unsupported camera type!";
     return false;
   }
@@ -178,7 +176,7 @@ void MvCam::Stop() {
     LOG(INFO) << "Exit  " << i << "  cam ";
   }
 }
-void MvCam::Receive(void *handle, const std::string &name)  {
+void MvCam::Receive(void *handle, const std::string &name) {
   unsigned int last_count = 0;
   MV_FRAME_OUT st_out_frame;
   CamData cam_data;
@@ -195,12 +193,10 @@ void MvCam::Receive(void *handle, const std::string &name)  {
       // 这里的time_stamp_us是相机触发时间，需要加上曝光时间的一半，以获得相机拍摄的时间
       if (params.find(name) == params.end()) {
         LOG(ERROR) << "cam " << name << " not found!";
-      }
-      else {
+      } else {
         if (uint64_t time; GET_LAST_TRIGGER_STATUS(params[name], time)) {
           cam_data.time_stamp_us = time + static_cast<uint64_t>(expose_time.fCurValue / 2.);
-        }
-        else {
+        } else {
           LOG(ERROR) << "cam " << name << " not found!";
         }
       }
@@ -226,7 +222,7 @@ void MvCam::Receive(void *handle, const std::string &name)  {
           cam_data.image = GMat(st_out_frame.stFrameInfo.nHeight, st_out_frame.stFrameInfo.nWidth,
                                 GMatType<uint8_t, 3>::Type, st_out_frame.pBufAddr);
         }
-        messenger.PubStruct(name,&cam_data,sizeof(cam_data));
+        messenger.PubStruct(name, &cam_data, sizeof(cam_data));
         if (last_count == 0) {
           last_count = st_out_frame.stFrameInfo.nFrameNum;
         } else {

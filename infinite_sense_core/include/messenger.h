@@ -25,7 +25,7 @@ class Messenger {
   void Sub(const std::string& topic, const std::function<void(const std::string&)>& callback);
   void SubStruct(const std::string& topic, const std::function<void(const void*, size_t)>& callback);
 
-private:
+ private:
   Messenger();
   ~Messenger();
   void CleanUp();

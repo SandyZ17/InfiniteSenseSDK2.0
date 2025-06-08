@@ -4,15 +4,17 @@
 #include "mv_cam.h"
 using namespace infinite_sense;
 // 自定义回调函数
-void ImuCallback(const void* msg, size_t) {
-  const auto* imu_data = static_cast<const ImuData*>(msg);
+void ImuCallback(const void *msg, size_t) {
+  const auto *imu_data = static_cast<const ImuData *>(msg);
   // 处理IMU数据
 }
+
 // 自定义回调函数
-void ImageCallback(const void* msg, size_t) {
-  const auto* cam_data = static_cast<const CamData*>(msg);
+void ImageCallback(const void *msg, size_t) {
+  const auto *cam_data = static_cast<const CamData *>(msg);
   // 处理图像数据
 }
+
 int main() {
   // 1.创建同步器
   Synchronizer synchronizer;
