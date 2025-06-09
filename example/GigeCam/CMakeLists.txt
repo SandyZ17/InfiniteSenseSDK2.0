@@ -83,6 +83,8 @@ else ()
     )
     file(GLOB_RECURSE SOURCE_FILES
             ros_main.cpp
+            mv_cam.cpp
+            mv_cam.h
     )
     add_executable(${PROJECT_NAME}_ros ${SOURCE_FILES})
     target_link_directories(${PROJECT_NAME}_ros PRIVATE ${MVCAM_LIB_DIR})
