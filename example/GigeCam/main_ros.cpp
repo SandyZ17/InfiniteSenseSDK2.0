@@ -41,13 +41,13 @@ class CamDriver {
 
   // 自定义回调函数
   void ImageCallback(const void *msg, size_t) {
-    const auto *cam_data = static_cast<const infinite_sense::CamData *>(msg);
-    std_msgs::msg::Header header;
-    header.stamp = rclcpp::Time(cam_data->time_stamp_us * 1000);
-    header.frame_id = "map";
+    const auto *cam_data = static_cast<const CamData *>(msg);
     const cv::Mat image_mat(cam_data->image.rows, cam_data->image.cols, CV_8UC1, cam_data->image.data);
-    const sensor_msgs::msg::Image::SharedPtr image_msg = cv_bridge::CvImage(header, "mono8", image_mat).toImageMsg();
-    image_pub_.publish(image_msg);
+    sensor_msgs::ImagePtr msg =
+        // mono8:灰度类型,bgr8:彩图，具体需要根据相机类型进行修改
+        cv_bridge::CvImage(std_msgs::Header(), "mono8", image_mat).toImageMsg();
+    msg->header.stamp = CreateRosTimestamp(cam_data->time_stamp_us);
+    image_pub_.publish(msg);
   }
   void Init() {
     synchronizer_.SetUsbLink("/dev/ttyACM0", 921600);
@@ -55,6 +55,7 @@ class CamDriver {
     mv_cam_->SetParams({{"cam_1", CAM_1}});
     synchronizer_.UseSensor(mv_cam_);
     imu_pub_ = node_.advertise<sensor_msgs::Imu>(imu_name_, 1000);
+    image_transport::ImageTransport it_(node_);
     image_pub_ = it_.advertise(camera_name_, 30);
     synchronizer_.Start();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
@@ -74,7 +75,6 @@ class CamDriver {
 
  private:
   ros::NodeHandle &node_;
-  image_transport::ImageTransport it_;
   ros::Publisher imu_pub_;
   image_transport::Publisher image_pub_;
   std::shared_ptr<MvCam> mv_cam_;
