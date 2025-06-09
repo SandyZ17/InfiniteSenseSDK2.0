@@ -32,7 +32,9 @@
 >1. 开发者文档正在编写中，敬请期待！
 
 <p align="center">
-<img  style="width:50%;"  alt="V4_board" src="assets/picture/v4_board.png">
+  <img alt="Image 1" src="assets/picture/v4_board.png" width="45%">
+  &nbsp;&nbsp;&nbsp;
+  <img alt="Image 2" src="assets/picture/link/all_sensor.png" width="45%">
 </p>
 
 # 支持设备

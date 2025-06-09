@@ -14,7 +14,7 @@ cd build/tools
 ./monitor
 ```
 <p align="center">
-<img  style="width:80%;"  alt="monitor" src="../picture/monitor.png">
+<img  style="width:30%;"  alt="monitor" src="../picture/monitor.png">
 </p>
 其中，cam_1_trigger (num: 20) 表示图像触发信号，cam_1 (num: 20) 表示图像帧数据。num表示一秒内接收的图像帧数，即频率为20Hz。
 
