@@ -15,15 +15,14 @@ inline ros::Time CreateRosTimestamp(const uint64_t mico_sec) {
   return {sec, nsec};
 }
 
-class UdpDemoNode {
+class CamDriver {
  public:
-  UdpDemoNode(ros::NodeHandle &nh) : node_(nh), it_(node_), camera_name_("cam_1"), imu_name_("imu_1") {}
-
+  CamDriver(ros::NodeHandle &nh) : node_(nh), it_(node_), camera_name_("cam_1"), imu_name_("imu_1") {}
   void ImuCallback(const void *msg, size_t) {
     const auto *imu_data = static_cast<const ImuData *>(msg);
     sensor_msgs::Imu imu_msg_data;
-    imu_msg_data.header.frame_id = "/base_imu_link";
-    imu_msg_data.header.stamp = CreateRosTimestamp(imudata.time_stamp_us);
+    imu_msg_data.header.frame_id = "map";
+    imu_msg_data.header.stamp = CreateRosTimestamp(imu_data->time_stamp_us);
 
     imu_msg_data.angular_velocity.x = imu_data->g[0];
     imu_msg_data.angular_velocity.y = imu_data->g[1];
@@ -33,10 +32,10 @@ class UdpDemoNode {
     imu_msg_data.linear_acceleration.y = imu_data->a[1];
     imu_msg_data.linear_acceleration.z = imu_data->a[2];
 
-    imu_msg_data.orientation.w = imu_data->a[0];
-    imu_msg_data.orientation.x = imu_data->a[1];
-    imu_msg_data.orientation.y = imu_data->a[2];
-    imu_msg_data.orientation.z = imu_data->a[3];
+    imu_msg_data.orientation.w = imu_data->q[0];
+    imu_msg_data.orientation.x = imu_data->q[1];
+    imu_msg_data.orientation.y = imu_data->q[2];
+    imu_msg_data.orientation.z = imu_data->q[3];
     imu_pub_.publish(imu_msg_data);
   }
 
@@ -59,8 +58,9 @@ class UdpDemoNode {
     image_pub_ = it_.advertise(camera_name_, 30);
     synchronizer_.Start();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    Messenger::GetInstance().SubStruct("imu_1", ImuCallback);
-    Messenger::GetInstance().SubStruct("cam_1", ImageCallback);
+    using namespace std::placeholders;
+    Messenger::GetInstance().SubStruct("imu_1", std::bind(&CamDriver::ImuCallback, this, _1, _2));
+    Messenger::GetInstance().SubStruct("cam_1", std::bind(&CamDriver::ImageCallback, this, _1, _2));
   }
 
   void Run() {
