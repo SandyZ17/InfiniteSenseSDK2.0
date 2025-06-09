@@ -55,7 +55,6 @@ class CamDriver {
     mv_cam_->SetParams({{"cam_1", CAM_1}});
     synchronizer_.UseSensor(mv_cam_);
     imu_pub_ = node_.advertise<sensor_msgs::Imu>(imu_name_, 1000);
-    image_transport::ImageTransport it_(node_);
     image_pub_ = it_.advertise(camera_name_, 30);
     synchronizer_.Start();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
@@ -76,6 +75,7 @@ class CamDriver {
  private:
   ros::NodeHandle &node_;
   ros::Publisher imu_pub_;
+  image_transport::ImageTransport it_;
   image_transport::Publisher image_pub_;
   std::shared_ptr<MvCam> mv_cam_;
   Synchronizer synchronizer_;
