@@ -86,7 +86,7 @@ class CamDriver {
 int main(int argc, char **argv) {
   ros::init(argc, argv, "udp_demo", ros::init_options::NoSigintHandler);
   ros::NodeHandle node;
-  UdpDemoNode demo_node(node);
+  CamDriver demo_node(node);
   demo_node.Init();
   demo_node.Run();
 
