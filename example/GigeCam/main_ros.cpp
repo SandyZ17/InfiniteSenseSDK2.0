@@ -41,16 +41,17 @@ class CamDriver {
 
   // 自定义回调函数
   void ImageCallback(const void *msg, size_t) {
+    cout << "adwq" << endl;
     const auto *cam_data = static_cast<const CamData *>(msg);
     const cv::Mat image_mat(cam_data->image.rows, cam_data->image.cols, CV_8UC1, cam_data->image.data);
-    sensor_msgs::ImagePtr msg =
+    sensor_msgs::ImagePtr img_msg =
         // mono8:灰度类型,bgr8:彩图，具体需要根据相机类型进行修改
         cv_bridge::CvImage(std_msgs::Header(), "mono8", image_mat).toImageMsg();
-    msg->header.stamp = CreateRosTimestamp(cam_data->time_stamp_us);
-    image_pub_.publish(msg);
+    img_msg->header.stamp = CreateRosTimestamp(cam_data->time_stamp_us);
+    image_pub_.publish(img_msg);
   }
   void Init() {
-    synchronizer_.SetUsbLink("/dev/ttyACM0", 921600);
+    synchronizer_.SetNetLink("192.168.1.188", 8888);
     mv_cam_ = std::make_shared<MvCam>();
     mv_cam_->SetParams({{"cam_1", CAM_1}});
     synchronizer_.UseSensor(mv_cam_);
@@ -58,9 +59,10 @@ class CamDriver {
     image_pub_ = it_.advertise(camera_name_, 30);
     synchronizer_.Start();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    using namespace std::placeholders;
-    Messenger::GetInstance().SubStruct("imu_1", std::bind(&CamDriver::ImuCallback, this, _1, _2));
-    Messenger::GetInstance().SubStruct("cam_1", std::bind(&CamDriver::ImageCallback, this, _1, _2));
+    Messenger::GetInstance().SubStruct(
+        "imu_1", std::bind(&CamDriver::ImuCallback, this, std::placeholders::_1, std::placeholders::_2));
+    Messenger::GetInstance().SubStruct(
+        "cam_1", std::bind(&CamDriver::ImageCallback, this, std::placeholders::_1, std::placeholders::_2));
   }
 
   void Run() {
